@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="z_spark.fallingsystem.Node"/>
+    <classEntry path="z_spark.fallingsystem.NodeControl"/>
+    <classEntry path="z_spark.fallingsystem.FallingSystem"/>
+    <classEntry path="z_spark.fallingsystem.FPriority"/>
+    <classEntry path="z_spark.fallingsystem.FallingSystemDebugger"/>
+    <classEntry path="z_spark.fallingsystem.IFNode"/>
+    <classEntry path="z_spark.fallingsystem.FUtil"/>
+    <classEntry path="z_spark.fallingsystem.IFallingEntity"/>
+    <classEntry path="z_spark.fallingsystem.Relation"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

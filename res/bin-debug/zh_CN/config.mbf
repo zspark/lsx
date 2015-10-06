@@ -1,0 +1,39 @@
+﻿#id	path	atlas	cache	type	type1	type2
+
+#UI美术资源；
+img	img/img.png	img/img.xml	0	1	1	9
+img2	img/img2.png	img/img2.xml	1	1	1	9
+
+sound_eliminate_1	sound/sound_eliminate_1.mp3		0	1	1	9
+sound_eliminate_2	sound/sound_eliminate_2.mp3		0	1	1	9
+sound_eliminate_3	sound/sound_eliminate_3.mp3		0	1	1	9
+sound_eliminate_4	sound/sound_eliminate_4.mp3		0	1	1	9
+sound_eliminate_5	sound/sound_eliminate_5.mp3		0	1	1	9
+sound_eliminate_6	sound/sound_eliminate_6.mp3		0	1	1	9
+sound_eliminate_7	sound/sound_eliminate_7.mp3		0	1	1	9
+sound_eliminate_8	sound/sound_eliminate_8.mp3		0	1	1	9
+sound_eliminate_color	sound/sound_eliminate_color.mp3		0	1	1	9
+sound_eliminate_strip	sound/sound_eliminate_strip.mp3		0	1	1	9
+sound_eliminate_wrap	sound/sound_eliminate_wrap.mp3		0	1	1	9
+
+sound_create_color	sound/sound_create_color.mp3		0	1	1	9
+sound_create_strip	sound/sound_create_strip.mp3		0	1	1	9
+sound_create_wrap	sound/sound_create_wrap.mp3		0	1	1	9
+
+sound_GameSceneBGM	sound/sound_GameSceneBGM.mp3		0	1	1	9
+sound_WorldSceneBGM	sound/sound_WorldSceneBGM.mp3		0	1	1	9
+
+sound_swap_colorcolor_cleanAll	sound/sound_swap_colorcolor_cleanAll.mp3		0	1	1	9
+sound_swap_colorcolor_swap	sound/sound_swap_colorcolor_swap.mp3		0	1	1	9
+sound_swap_lineline	sound/sound_swap_lineline.mp3		0	1	1	9
+sound_swap_wrapline	sound/sound_swap_wrapline.mp3		0	1	1	9
+sound_swap_wrapwrap	sound/sound_swap_wrapwrap.mp3		0	1	1	9
+sound_swap	sound/sound_swap.mp3		0	1	1	9
+
+sound_ice_break	sound/sound_ice_break.mp3		0	1	1	9
+
+sound_contnuousMatch_3	sound/sound_contnuousMatch_3.mp3		0	1	1	9
+sound_contnuousMatch_5	sound/sound_contnuousMatch_5.mp3		0	1	1	9
+sound_contnuousMatch_7	sound/sound_contnuousMatch_7.mp3		0	1	1	9
+sound_contnuousMatch_9	sound/sound_contnuousMatch_9.mp3		0	1	1	9
+sound_contnuousMatch_11	sound/sound_contnuousMatch_11.mp3		0	1	1	9

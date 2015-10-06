@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="z_spark.mapsystem.IIntegrationSys_MS"/>
+    <classEntry path="z_spark.mapsystem.IBlockEntity"/>
+    <classEntry path="z_spark.mapsystem.BlockTypeConst"/>
+    <classEntry path="z_spark.mapsystem.MapSystemDebugger"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

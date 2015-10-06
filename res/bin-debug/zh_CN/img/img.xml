@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:7f130992d941c4ab41c944b9fecf4c48:1/1$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="img.png" width="1024" height="1024">
+    <sprite n="arrow_1" x="289" y="260" w="14" h="24" oX="0" oY="1" oW="14" oH="26"/>
+    <sprite n="arrow_2" x="289" y="234" w="14" h="24" oX="0" oY="1" oW="14" oH="26"/>
+    <sprite n="arrow_3" x="393" y="182" w="12" h="22" oX="0" oY="2" oW="14" oH="26"/>
+    <sprite n="arrow_4" x="393" y="206" w="10" h="18" oX="2" oY="4" oW="14" oH="26"/>
+    <sprite n="blue_boom_1" x="159" y="430" w="75" h="75" oX="4" oY="5" oW="85" oH="85"/>
+    <sprite n="blue_change_1" x="354" y="565" w="61" h="61" oX="11" oY="11" oW="85" oH="85"/>
+    <sprite n="blue_line_1" x="78" y="477" w="75" h="73" oX="4" oY="6" oW="85" oH="85"/>
+    <sprite n="blue_normal_1" x="876" y="692" w="63" h="63" oX="11" oY="8" oW="85" oH="85"/>
+    <sprite n="btn_blue" x="1" y="85" w="185" h="80"/>
+    <sprite n="btn_gray" x="780" y="83" w="185" h="80"/>
+    <sprite n="btn_green" x="780" y="1" w="185" h="80"/>
+    <sprite n="bubble_1" x="393" y="492" w="71" h="71" oX="6" oY="6" oW="85" oH="85"/>
+    <sprite n="bubble_10" x="655" y="249" w="77" h="81" oX="4" oY="2" oW="85" oH="85"/>
+    <sprite n="bubble_11" x="1" y="343" w="79" h="85" oX="2" oY="0" oW="85" oH="85"/>
+    <sprite n="bubble_2" x="466" y="444" w="71" h="71" oX="6" oY="6" oW="85" oH="85"/>
+    <sprite n="bubble_3" x="320" y="488" w="71" h="71" oX="6" oY="6" oW="85" oH="85"/>
+    <sprite n="bubble_4" x="236" y="490" w="71" h="69" oX="6" oY="8" oW="85" oH="85"/>
+    <sprite n="bubble_5" x="393" y="419" w="71" h="71" oX="6" oY="6" oW="85" oH="85"/>
+    <sprite n="bubble_6" x="320" y="415" w="71" h="71" oX="6" oY="6" oW="85" oH="85"/>
+    <sprite n="bubble_7" x="548" y="407" w="71" h="71" oX="7" oY="7" oW="85" oH="85"/>
+    <sprite n="bubble_8" x="243" y="413" w="75" h="75" oX="5" oY="5" oW="85" oH="85"/>
+    <sprite n="bubble_9" x="574" y="253" w="77" h="79" oX="4" oY="3" oW="85" oH="85"/>
+    <sprite n="cage_1" x="408" y="178" w="83" h="83" oX="0" oY="0" oW="85" oH="85"/>
+    <sprite n="eliminate_1" x="273" y="201" w="31" h="31" oX="32" oY="31" oW="95" oH="95"/>
+    <sprite n="eliminate_10" x="687" y="85" w="91" h="91" oX="1" oY="1" oW="95" oH="95"/>
+    <sprite n="eliminate_11" x="952" y="408" w="69" h="81" oX="13" oY="7" oW="95" oH="95"/>
+    <sprite n="eliminate_2" x="736" y="178" w="41" h="41" oX="26" oY="27" oW="95" oH="95"/>
+    <sprite n="eliminate_3" x="967" y="1" w="53" h="51" oX="21" oY="22" oW="95" oH="95"/>
+    <sprite n="eliminate_4" x="155" y="507" w="71" h="67" oX="11" oY="13" oW="95" oH="95"/>
+    <sprite n="eliminate_5" x="308" y="182" w="83" h="81" oX="6" oY="7" oW="95" oH="95"/>
+    <sprite n="eliminate_6" x="872" y="165" w="89" h="87" oX="2" oY="3" oW="95" oH="95"/>
+    <sprite n="eliminate_7" x="594" y="85" w="91" h="91" oX="1" oY="1" oW="95" oH="95"/>
+    <sprite n="eliminate_8" x="501" y="85" w="91" h="91" oX="1" oY="1" oW="95" oH="95"/>
+    <sprite n="eliminate_9" x="408" y="85" w="91" h="91" oX="1" oY="1" oW="95" oH="95"/>
+    <sprite n="eliminate_line_1" x="1" y="1" w="777" h="82"/>
+    <sprite n="gray_boom_1" x="188" y="276" w="81" h="75" oX="1" oY="4" oW="85" oH="85"/>
+    <sprite n="gray_change_1" x="291" y="561" w="61" h="61" oX="11" oY="11" oW="85" oH="85"/>
+    <sprite n="gray_line_1" x="1" y="507" w="75" h="69" oX="5" oY="8" oW="85" oH="85"/>
+    <sprite n="gray_normal_1" x="941" y="562" w="69" h="61" oX="8" oY="11" oW="85" oH="85"/>
+    <sprite n="green_boom_1" x="188" y="201" w="83" h="73" oX="1" oY="5" oW="85" oH="85"/>
+    <sprite n="green_change_1" x="1" y="650" w="61" h="61" oX="11" oY="11" oW="85" oH="85"/>
+    <sprite n="green_line_1" x="1" y="272" w="81" h="69" oX="1" oY="7" oW="85" oH="85"/>
+    <sprite n="green_normal_1" x="78" y="552" w="71" h="63" oX="7" oY="11" oW="85" oH="85"/>
+    <sprite n="grow_big_1" x="736" y="221" w="40" h="39" oX="34" oY="32" oW="108" oH="103"/>
+    <sprite n="grow_big_10" x="880" y="408" w="70" h="67" oX="18" oY="18" oW="108" oH="103"/>
+    <sprite n="grow_big_11" x="84" y="321" w="80" h="77" oX="13" oY="12" oW="108" oH="103"/>
+    <sprite n="grow_big_12" x="780" y="165" w="90" h="87" oX="8" oY="7" oW="108" oH="103"/>
+    <sprite n="grow_big_13" x="308" y="85" w="98" h="95" oX="5" oY="4" oW="108" oH="103"/>
+    <sprite n="grow_big_14" x="1" y="167" w="108" h="103"/>
+    <sprite n="grow_big_2" x="742" y="554" w="48" h="45" oX="29" oY="29" oW="108" oH="103"/>
+    <sprite n="grow_big_3" x="880" y="329" w="46" h="45" oX="31" oY="29" oW="108" oH="103"/>
+    <sprite n="grow_big_4" x="498" y="395" w="48" h="47" oX="29" oY="27" oW="108" oH="103"/>
+    <sprite n="grow_big_5" x="498" y="346" w="48" h="47" oX="29" oY="27" oW="108" oH="103"/>
+    <sprite n="grow_big_6" x="967" y="152" w="48" h="47" oX="30" oY="27" oW="108" oH="103"/>
+    <sprite n="grow_big_7" x="967" y="103" w="48" h="47" oX="30" oY="28" oW="108" oH="103"/>
+    <sprite n="grow_big_8" x="967" y="54" w="50" h="47" oX="28" oY="28" oW="108" oH="103"/>
+    <sprite n="grow_big_9" x="963" y="201" w="60" h="59" oX="23" oY="21" oW="108" oH="103"/>
+    <sprite n="purple_boom_1" x="655" y="178" w="79" h="69" oX="2" oY="7" oW="85" oH="85"/>
+    <sprite n="purple_change_1" x="73" y="617" w="61" h="61" oX="11" oY="11" oW="85" oH="85"/>
+    <sprite n="purple_line_1" x="305" y="265" w="77" h="69" oX="4" oY="7" oW="85" oH="85"/>
+    <sprite n="purple_normal_1" x="792" y="556" w="67" h="59" oX="9" oY="12" oW="85" oH="85"/>
+    <sprite n="red_boom_1" x="493" y="255" w="77" h="75" oX="4" oY="4" oW="85" oH="85"/>
+    <sprite n="red_change_1" x="151" y="576" w="61" h="61" oX="11" oY="11" oW="85" oH="85"/>
+    <sprite n="red_line_1" x="393" y="263" w="77" h="73" oX="3" oY="5" oW="85" oH="85"/>
+    <sprite n="red_normal_1" x="870" y="548" w="69" h="63" oX="7" oY="11" oW="85" oH="85"/>
+    <sprite n="rope_1" x="472" y="332" w="76" h="12"/>
+    <sprite n="rope_ud" x="273" y="234" w="14" h="73"/>
+    <sprite n="select_1" x="348" y="338" w="75" h="75" oX="4" oY="4" oW="85" oH="85"/>
+    <sprite n="select_10" x="425" y="346" w="71" h="71" oX="7" oY="7" oW="85" oH="85"/>
+    <sprite n="select_11" x="623" y="405" w="71" h="71" oX="7" oY="7" oW="85" oH="85"/>
+    <sprite n="select_12" x="726" y="404" w="71" h="71" oX="7" oY="7" oW="85" oH="85"/>
+    <sprite n="select_13" x="807" y="402" w="71" h="71" oX="7" oY="7" oW="85" oH="85"/>
+    <sprite n="select_14" x="928" y="335" w="71" h="71" oX="7" oY="7" oW="85" oH="85"/>
+    <sprite n="select_15" x="807" y="329" w="71" h="71" oX="7" oY="7" oW="85" oH="85"/>
+    <sprite n="select_2" x="1" y="430" w="75" h="75" oX="4" oY="4" oW="85" oH="85"/>
+    <sprite n="select_3" x="82" y="400" w="75" h="75" oX="4" oY="4" oW="85" oH="85"/>
+    <sprite n="select_4" x="166" y="353" w="75" h="75" oX="4" oY="4" oW="85" oH="85"/>
+    <sprite n="select_5" x="271" y="336" w="75" h="75" oX="5" oY="5" oW="85" oH="85"/>
+    <sprite n="select_6" x="111" y="244" w="75" h="75" oX="5" oY="5" oW="85" oH="85"/>
+    <sprite n="select_7" x="853" y="254" w="73" h="73" oX="5" oY="5" oW="85" oH="85"/>
+    <sprite n="select_8" x="550" y="334" w="71" h="71" oX="7" oY="7" oW="85" oH="85"/>
+    <sprite n="select_9" x="653" y="332" w="71" h="71" oX="7" oY="7" oW="85" oH="85"/>
+    <sprite n="snow_1" x="941" y="491" w="69" h="69" oX="8" oY="8" oW="85" oH="85"/>
+    <sprite n="snow_1_0" x="604" y="551" w="67" h="67" oX="9" oY="9" oW="85" oH="85"/>
+    <sprite n="snow_1_1" x="535" y="549" w="67" h="67" oX="9" oY="9" oW="85" oH="85"/>
+    <sprite n="snow_1_2" x="466" y="517" w="67" h="67" oX="8" oY="8" oW="85" oH="85"/>
+    <sprite n="snow_1_3" x="809" y="680" w="65" h="65" oX="9" oY="10" oW="85" oH="85"/>
+    <sprite n="snow_1_4" x="228" y="561" w="61" h="61" oX="11" oY="11" oW="85" oH="85"/>
+    <sprite n="snow_1_5" x="478" y="618" w="57" h="59" oX="13" oY="12" oW="85" oH="85"/>
+    <sprite n="snow_2" x="870" y="477" w="69" h="69" oX="8" oY="8" oW="85" oH="85"/>
+    <sprite n="snow_2_0" x="417" y="586" w="59" h="59" oX="13" oY="13" oW="85" oH="85"/>
+    <sprite n="snow_2_1" x="941" y="755" w="61" h="61" oX="11" oY="12" oW="85" oH="85"/>
+    <sprite n="snow_2_10" x="742" y="617" w="65" h="65" oX="9" oY="9" oW="85" oH="85"/>
+    <sprite n="snow_2_2" x="621" y="478" w="67" h="71" oX="9" oY="7" oW="85" oH="85"/>
+    <sprite n="snow_2_3" x="799" y="475" w="69" h="79" oX="8" oY="2" oW="85" oH="85"/>
+    <sprite n="snow_2_4" x="696" y="477" w="67" h="75" oX="9" oY="4" oW="85" oH="85"/>
+    <sprite n="snow_2_5" x="734" y="329" w="71" h="73" oX="7" oY="5" oW="85" oH="85"/>
+    <sprite n="snow_2_6" x="493" y="178" w="79" h="75" oX="2" oY="4" oW="85" oH="85"/>
+    <sprite n="snow_2_7" x="574" y="178" w="79" h="73" oX="2" oY="5" oW="85" oH="85"/>
+    <sprite n="snow_2_8" x="928" y="262" w="73" h="71" oX="6" oY="7" oW="85" oH="85"/>
+    <sprite n="snow_2_9" x="928" y="625" w="65" h="65" oX="10" oY="10" oW="85" oH="85"/>
+    <sprite n="super_normal_1" x="673" y="554" w="67" h="65" oX="8" oY="9" oW="85" oH="85"/>
+    <sprite n="tile" x="1" y="578" w="70" h="70"/>
+    <sprite n="whirlpool" x="188" y="85" w="118" h="114"/>
+    <sprite n="whirlpool2" x="861" y="613" w="65" h="65"/>
+    <sprite n="yellow_boom_1" x="778" y="254" w="73" h="73" oX="6" oY="6" oW="85" oH="85"/>
+    <sprite n="yellow_change_1" x="941" y="692" w="61" h="61" oX="11" oY="11" oW="85" oH="85"/>
+    <sprite n="yellow_line_1" x="111" y="167" w="75" h="75" oX="5" oY="5" oW="85" oH="85"/>
+    <sprite n="yellow_normal" x="539" y="480" w="67" h="67" oX="9" oY="6" oW="85" oH="85"/>
+</TextureAtlas>

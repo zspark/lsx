@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="z_spark.eliminatesystem.EliminateSystem"/>
+    <classEntry path="z_spark.eliminatesystem.IEliminateEntity"/>
+    <classEntry path="z_spark.eliminatesystem.IIntegrationSys_ES"/>
+    <classEntry path="z_spark.eliminatesystem.DirConst"/>
+    <classEntry path="z_spark.eliminatesystem.Exchange"/>
+    <classEntry path="z_spark.eliminatesystem.HandleResult"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
