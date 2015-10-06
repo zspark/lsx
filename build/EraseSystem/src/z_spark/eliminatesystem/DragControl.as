@@ -166,16 +166,18 @@ package z_spark.eliminatesystem
 		
 		private function changePosition():void
 		{
-			var tmp:IEliminateEntity=m_map[m_exchange.indexA];
-			var aOccupiedIndex:int=tmp.occupiedIndex;
-			m_map[m_exchange.indexA]=m_map[m_exchange.indexB];
-			tmp.occupiedIndex=m_exchange.entityB.occupiedIndex;
-			m_map[m_exchange.indexB]=tmp;
-			m_exchange.entityB.occupiedIndex=aOccupiedIndex;
+			var tmpA:IEliminateEntity=m_map[m_exchange.indexA];
+			var tmpB:IEliminateEntity=m_map[m_exchange.indexB];
+			m_map[m_exchange.indexA]=tmpB;
+			m_map[m_exchange.indexB]=tmpA;
+
+			var oA:int=tmpA.occupiedIndex;
+			tmpA.occupiedIndex=tmpB.occupiedIndex;
+			tmpB.occupiedIndex=oA;
 			
-			var eBPos:Point=new Point(m_exchange.entityB.x,m_exchange.entityB.y);
-			TweenLite.to(m_exchange.entityB, m_delay, {x:m_exchange.entityA.x, y:m_exchange.entityA.y});
-			TweenLite.to(m_exchange.entityA, m_delay, {x:eBPos.x, y:eBPos.y});
+			var tmpAPos:Point=new Point(tmpA.x,tmpA.y);
+			TweenLite.to(tmpA, m_delay, {x:tmpB.x, y:tmpB.y});
+			TweenLite.to(tmpB, m_delay, {x:tmpAPos.x, y:tmpAPos.y});
 			
 			Effector.playSound("sound_swap");
 		}

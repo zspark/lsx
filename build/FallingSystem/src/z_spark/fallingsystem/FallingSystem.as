@@ -239,7 +239,7 @@ package z_spark.fallingsystem
 					}else break;
 				}
 				
-				if(spdFactor>2)spdFactor=2;
+				if(spdFactor>2.5)spdFactor=2.5;
 				if(entity.spdy<SPEED*spdFactor){
 					entity.spdy=SPEED*spdFactor;
 				}
