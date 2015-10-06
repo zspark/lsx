@@ -62,6 +62,8 @@ package z_spark.eliminatesystem
 			if(m_locked)return;
 			trace("onMDown");
 			
+			m_exchange.clear();
+			
 			var entity:IEliminateEntity=event.currentTarget as IEliminateEntity;
 			if(entity){
 				m_stage.addEventListener(MouseEvent.MOUSE_MOVE,onMMove);

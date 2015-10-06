@@ -85,7 +85,7 @@ package z_spark.eliminatesystem
 				CONFIG::DEBUG{
 					s_log.info("::endFirstExchange(),//普通消除,result="+result);
 				};
-				EliminateCheck3.handleNormal(m_exchange.indexA,m_exchange.indexB,eArr,sEntities);
+				EliminateCheck3.handleDragElimination(m_exchange.indexA,m_exchange.indexB,eArr,sEntities);
 				afterCheck(eArr,sEntities,true,true);
 			}
 		}
@@ -127,6 +127,8 @@ package z_spark.eliminatesystem
 		}
 		
 		private function tryGenNewEffectAnimal_(index:int,arr:Array,toType:int):int{
+			//移动的动物不是普通动物的话，需要随机选取一个rowEliminateArr或者colEliminatedArr中的索引
+			//作为新的特效动物的位置；
 			var entity:IEliminateEntity=m_map[index];
 			if(entity.type==TypeConst.NORMAL){
 				entity.type=toType;
@@ -155,8 +157,6 @@ package z_spark.eliminatesystem
 			var entity:IEliminateEntity=m_map[index];
 			var isTartgetNormal:Boolean=entity.type==TypeConst.NORMAL;
 			
-			//移动的动物不是普通动物的话，需要随机选取一个rowEliminateArr或者colEliminatedArr中的索引
-			//作为新的特效动物的位置；
 			var result:int=-999;
 			if(rowCount>=5){
 				result=tryGenNewEffectAnimal_(index,rowEliminateArr,TypeConst.SUPER);

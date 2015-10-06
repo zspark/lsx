@@ -80,7 +80,7 @@ package z_spark.kxxxl.game
 		{
 			DataManager.setData(m_currentLevel);
 			
-//			CONFIG::DEBUG{return;};
+			CONFIG::DEBUG{return;};
 			Effector.stopSound(m_bgSoundId);
 			m_bgSoundId=Effector.playSound("sound_GameSceneBGM",99999);
 		}		

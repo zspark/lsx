@@ -75,7 +75,7 @@ package z_spark.eliminatesystem
 			}
 		}
 		
-		public static function handleNormal(indexA:int,indexB:int,eArr:Array,sEntities:Array):void{
+		public static function handleDragElimination(indexA:int,indexB:int,eArr:Array,sEntities:Array):void{
 			handleSingle(indexA,eArr,sEntities);
 			handleSingle(indexB,eArr,sEntities);
 			
@@ -86,6 +86,7 @@ package z_spark.eliminatesystem
 				
 				n++;
 			}
+			trace();
 		}
 		
 		/**
@@ -183,16 +184,24 @@ package z_spark.eliminatesystem
 				}
 				case TypeConst.BOOM_LINELR:
 				{
-					Effector.playSound("sound_swap_wrapline");
+					var entity:IEliminateEntity=s_map[indexa];
+					entity.type=TypeConst.NORMAL;
+					entity=s_map[indexb];
+					entity.type=TypeConst.NORMAL;
 					pushBoomLineLR(indexa,indexb,eArr,sEntities);
 					result=HandleResult.OTHER_COMBINE;
+					Effector.playSound("sound_swap_wrapline");
 					break;
 				}
 				case TypeConst.BOOM_LINEUD:
 				{
-					Effector.playSound("sound_swap_wrapline");
+					entity=s_map[indexa];
+					entity.type=TypeConst.NORMAL;
+					entity=s_map[indexb];
+					entity.type=TypeConst.NORMAL;
 					pushBoomLineUD(indexa,indexb,eArr,sEntities);
 					result=HandleResult.OTHER_COMBINE;
+					Effector.playSound("sound_swap_wrapline");
 					break;
 				}
 				case TypeConst.TWO_LINELR:
@@ -331,9 +340,6 @@ package z_spark.eliminatesystem
 				}
 				i++;
 			}
-			
-			entity=s_map[index];
-			sEntities.splice(sEntities.indexOf(entity),1);
 		}
 		
 		/**
@@ -354,8 +360,6 @@ package z_spark.eliminatesystem
 				i++;
 			}
 			
-			entity=s_map[index];
-			sEntities.splice(sEntities.indexOf(entity),1);
 		}
 		
 		/**
@@ -376,12 +380,6 @@ package z_spark.eliminatesystem
 				pushLineLR(indexb+GameSize.s_cols,eArr,sEntities);
 				pushLineLR(indexa-GameSize.s_cols,eArr,sEntities);
 			}
-			
-			var entity:IEliminateEntity=s_map[indexa];
-			sEntities.splice(sEntities.indexOf(entity),1);
-			
-			entity=s_map[indexb];
-			sEntities.splice(sEntities.indexOf(entity),1);
 		}
 		
 		/**
@@ -404,12 +402,6 @@ package z_spark.eliminatesystem
 				if((indexb%GameSize.s_cols)<GameSize.s_cols-1)pushLineUD(indexb+1,eArr,sEntities);
 				if((indexa%GameSize.s_cols)>0)pushLineUD(indexa-1,eArr,sEntities);
 			}
-			
-			var entity:IEliminateEntity=s_map[indexa];
-			sEntities.splice(sEntities.indexOf(entity),1);
-			
-			entity=s_map[indexb];
-			sEntities.splice(sEntities.indexOf(entity),1);
 		}
 		
 		/**
@@ -538,7 +530,7 @@ package z_spark.eliminatesystem
 		 * 
 		 */
 		private static function pushToArr(row:int,col:int,arr:Array):void{
-			if(row<=0 || row>=GameSize.s_rows || col<0 || col>=GameSize.s_cols)return;
+			if(row<0 || row>=GameSize.s_rows || col<0 || col>=GameSize.s_cols)return;
 			var index:int=row*GameSize.s_cols+col;
 			if(s_filterArr.indexOf(index)>=0)return;
 			if(arr.indexOf(index)<0)arr.push(index);
