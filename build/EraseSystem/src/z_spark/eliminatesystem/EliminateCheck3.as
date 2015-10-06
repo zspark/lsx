@@ -28,11 +28,11 @@ package z_spark.eliminatesystem
 		public static function checkArray(arr:Array,eArr:Array,sEntities:Array):void{
 			while(arr.length>0){
 				var index:int=arr.shift();
-				checkSigle(index,eArr,sEntities);
+				handleSingle(index,eArr,sEntities);
 			}
 		}
 		
-		public static function checkSigle(index:int,eArr:Array,sEntities:Array):void{
+		public static function handleSingle(index:int,eArr:Array,sEntities:Array):void{
 			if(s_filterArr.indexOf(index)>=0)return;
 			
 			var rowEliminateArr:Array=[];
@@ -40,36 +40,51 @@ package z_spark.eliminatesystem
 			var colEliminateArr:Array=[];
 			var colCount:uint=checkCol(index,colEliminateArr);
 			
-			if(s_genFn(rowEliminateArr,colEliminateArr,index)){
-				rowEliminateArr.splice(rowEliminateArr.indexOf(index),1);
-				colEliminateArr.splice(colEliminateArr.indexOf(index),1);
-				
+			var result:int=s_genFn(rowEliminateArr,colEliminateArr,index);
+			if(result>=0){
+				var sIndex:int=rowEliminateArr.indexOf(result);
+				if(sIndex>=0)rowEliminateArr.splice(sIndex,1);
+				sIndex=colEliminateArr.indexOf(result);
+				if(sIndex>=0)colEliminateArr.splice(sIndex,1);
 			}
 			
 			if(rowCount>=3){
 				for (var i:int=0;i<rowEliminateArr.length;i++){
 					var idx:int=rowEliminateArr[i];
+					pushToArr_index(idx,eArr);
 					var entity:IEliminateEntity=getEntity_index(idx);
 					if(entity){
 						if(entity.type!=TypeConst.NORMAL){
 							pushToSpecial_index(idx,sEntities);
 						}
 					}
-					pushToArr_index(idx,eArr);
 				}
 			}
 			
 			if(colCount>=3){
 				for (i=0;i<colEliminateArr.length;i++){
 					idx=colEliminateArr[i];
+					pushToArr_index(idx,eArr);
 					entity=getEntity_index(idx);
 					if(entity){
 						if(entity.type!=TypeConst.NORMAL){
 							pushToSpecial_index(idx,sEntities);
 						}
 					}
-					pushToArr_index(idx,eArr);
 				}
+			}
+		}
+		
+		public static function handleNormal(indexA:int,indexB:int,eArr:Array,sEntities:Array):void{
+			handleSingle(indexA,eArr,sEntities);
+			handleSingle(indexB,eArr,sEntities);
+			
+			var n:int=0;
+			while(n<sEntities.length){
+				var e:IEliminateEntity=sEntities[n];
+				pushSpecial(e.index,eArr,sEntities);
+				
+				n++;
 			}
 		}
 		
@@ -215,6 +230,14 @@ package z_spark.eliminatesystem
 			return result;
 		}
 		
+		/**
+		 * 将index所在的特效鸟按照自己正常的范围消除后，将范围内的索引推入eArr，
+		 * 这些索引中如果存在其他特效鸟，再次将实例推入sEntity中； 
+		 * @param index
+		 * @param eArr
+		 * @param sEntities
+		 * 
+		 */
 		public static function pushSpecial(index:int,eArr:Array,sEntities:Array):void{
 			var entity:IEliminateEntity=s_map[index];
 			CONFIG::DEBUG{

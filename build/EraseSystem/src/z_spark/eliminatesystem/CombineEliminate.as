@@ -67,7 +67,7 @@ package z_spark.eliminatesystem
 		{
 			m_cur++;
 			if(m_cur%m_step==0){
-				var entity:IEliminateEntity=getEntity();
+				var entity:IEliminateEntity=getSpecialEntity();
 				if(entity){
 					var eArr:Array=[],sEntities:Array=[entity];
 					var n:int=0;
@@ -100,7 +100,7 @@ package z_spark.eliminatesystem
 			m_dragControl.remove(entity);
 		}
 		
-		private function getEntity():IEliminateEntity{
+		private function getSpecialEntity():IEliminateEntity{
 			for each(var entity:IEliminateEntity in m_specialEntities){
 				if(m_map.indexOf(entity)>=0){
 					return entity;

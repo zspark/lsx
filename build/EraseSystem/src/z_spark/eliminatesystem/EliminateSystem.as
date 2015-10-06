@@ -85,9 +85,7 @@ package z_spark.eliminatesystem
 				CONFIG::DEBUG{
 					s_log.info("::endFirstExchange(),//普通消除,result="+result);
 				};
-				EliminateCheck3.checkSigle(m_exchange.indexA,eArr,sEntities);
-				EliminateCheck3.checkSigle(m_exchange.indexB,eArr,sEntities);
-				
+				EliminateCheck3.handleNormal(m_exchange.indexA,m_exchange.indexB,eArr,sEntities);
 				afterCheck(eArr,sEntities,true,true);
 			}
 		}
@@ -128,39 +126,64 @@ package z_spark.eliminatesystem
 			
 		}
 		
-		private function tryGenNewEffectAnimal(rowEliminateArr:Array,colEliminateArr:Array,index:int):Boolean{
+		private function tryGenNewEffectAnimal_(index:int,arr:Array,toType:int):int{
+			var entity:IEliminateEntity=m_map[index];
+			if(entity.type==TypeConst.NORMAL){
+				entity.type=toType;
+				return index;
+			}else{
+				var i:int=0;
+				while(i<arr.length){
+					entity=m_map[arr[i]];
+					if(entity.type==TypeConst.NORMAL)break;
+					i++;
+				}
+				
+				if(i>=arr.length){
+					//not found corrent animal;
+					return -999;
+				}else{
+					entity.type=toType;
+					return arr[i];
+				}
+			}
+		}
+		
+		private function tryGenNewEffectAnimal(rowEliminateArr:Array,colEliminateArr:Array,index:int):int{
 			var rowCount:uint=rowEliminateArr.length;
 			var colCount:uint=colEliminateArr.length;
 			var entity:IEliminateEntity=m_map[index];
+			var isTartgetNormal:Boolean=entity.type==TypeConst.NORMAL;
 			
-			var result:Boolean=false;
-			if(rowCount>=5 || colCount>=5){
-				entity.type=TypeConst.SUPER;
+			//移动的动物不是普通动物的话，需要随机选取一个rowEliminateArr或者colEliminatedArr中的索引
+			//作为新的特效动物的位置；
+			var result:int=-999;
+			if(rowCount>=5){
+				result=tryGenNewEffectAnimal_(index,rowEliminateArr,TypeConst.SUPER);
 				Effector.playSound("sound_create_color");
-				result= true;
+			}else if( colCount>=5){
+				result=tryGenNewEffectAnimal_(index,colEliminateArr,TypeConst.SUPER);
+				Effector.playSound("sound_create_color");
 			}else{
 				if(rowCount==4){
 					if(colCount>=3){
-						entity.type=TypeConst.BOOM;
+						result=tryGenNewEffectAnimal_(index,colEliminateArr.concat(rowEliminateArr),TypeConst.BOOM);
 						Effector.playSound("sound_create_wrap");
 					}else{
-						entity.type=TypeConst.LINE_UD;
+						result=tryGenNewEffectAnimal_(index,rowEliminateArr,TypeConst.LINE_UD);
 						Effector.playSound("sound_create_strip");
 					}
-					result=  true;
 				}else if(colCount==4){
 					if(rowCount>=3){
-						entity.type=TypeConst.BOOM;
+						result=tryGenNewEffectAnimal_(index,colEliminateArr.concat(rowEliminateArr),TypeConst.BOOM);
 						Effector.playSound("sound_create_wrap");
 					}else{
-						entity.type=TypeConst.LINE_LR;
+						result=tryGenNewEffectAnimal_(index,colEliminateArr,TypeConst.LINE_LR);
 						Effector.playSound("sound_create_strip");
 					}
-					result=  true;
 				}else if(colCount==3 && rowCount==3){
-					entity.type=TypeConst.BOOM;
+					result=tryGenNewEffectAnimal_(index,colEliminateArr.concat(rowEliminateArr),TypeConst.BOOM);
 					Effector.playSound("sound_create_wrap");
-					result=  true;
 				}
 			}
 			return result;
