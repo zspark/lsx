@@ -38,7 +38,6 @@ package z_spark.fallingsystem
 			m_statusTxt.width=m_stage.stageWidth;
 			m_statusTxt.height=40;
 			m_statusTxt.text=INFO+"\npaused:"+m_paused+'	speed:'+FallingSystem.s_ins.SPEED;
-			m_statusTxt.y=m_stage.stageHeight-m_statusTxt.height;
 			m_debugLayer.addChild(m_statusTxt);
 			};
 		}
@@ -50,7 +49,6 @@ package z_spark.fallingsystem
 
 		private function onStageResize(event:Event):void
 		{
-			m_statusTxt.y=m_stage.stageHeight-m_statusTxt.height;
 			m_statusTxt.width=m_stage.stageWidth;
 		}
 		

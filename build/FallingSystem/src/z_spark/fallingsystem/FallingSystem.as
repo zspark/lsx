@@ -1,5 +1,6 @@
 package z_spark.fallingsystem
 {
+	import flash.concurrent.Condition;
 	import flash.display.Stage;
 	import flash.events.Event;
 	
@@ -187,7 +188,7 @@ package z_spark.fallingsystem
 							m_occupyMap[entity.occupiedIndex]=null;
 							m_occupyMap[cnode.index]=entity;
 							entity.occupiedIndex=cnode.index;
-							setNewMotivationState(node,cnode,entity);
+							setNewMotivationState(node,cnode,entity,entity.y-entity.finishY);
 						}
 					}else{
 						//不能继续下落；
@@ -218,28 +219,44 @@ package z_spark.fallingsystem
 			}
 		}
 		
-		private function setNewMotivationState(fnode:Node,node:Node,entity:IFallingEntity):Boolean{
+		private function setNewMotivationState(fnode:Node,node:Node,entity:IFallingEntity,overDis:Number):void{
 			
 			entity.finishY=getCenterY(node);
 			entity.finishX=getCenterX(node);
-			entity.spdy=SPEED;
-			if(node.relationToElderNode==Relation.SON){
-				entity.spdx=0;
-			}else if(node.relationToElderNode==Relation.LEFT_NEPHEW){
-				entity.spdx=-SPEED;
-			}else if(node.relationToElderNode==Relation.RIGHT_NEPHEW){
-				entity.spdx=SPEED;
-			}else{
-				Assert.AssertTrue(false);
-			}
 			
 			if(fnode.deep!=node.deep-1){
 				entity.x=entity.finishX;
 				entity.y=entity.finishY-GameSize.s_gridh;
 				entity.spdx=0;
+				entity.spdy=SPEED;
+			}else{
+				var spdFactor:Number=1;
+				var cnode:Node=node.getNextChildNodeWithPriority();
+				while(cnode){
+					if(m_occupyMap[cnode.index]==null){
+						spdFactor+=1;
+						cnode=cnode.getNextChildNodeWithPriority();
+					}else break;
+				}
+				
+				if(spdFactor>5)spdFactor=5;
+				if(entity.spdy<SPEED*spdFactor){
+					entity.spdy=SPEED*spdFactor;
+				}
+				
+				if(node.relationToElderNode==Relation.SON){
+					entity.spdx=0;
+					entity.x=entity.finishX;
+				}else if(node.relationToElderNode==Relation.LEFT_NEPHEW){
+					entity.spdx=-entity.spdy;
+					entity.x=getCenterX(fnode)-overDis;
+				}else if(node.relationToElderNode==Relation.RIGHT_NEPHEW){
+					entity.spdx=entity.spdy;
+					entity.x=getCenterX(fnode)+overDis;
+				}else{
+					Assert.AssertTrue(false);
+				}
 			}
-			
-			return true;
 		}
 		
 		private function getCenterY(node:Node):int{return node.row*GameSize.s_gridh+GameSize.s_gridh*.5;}
