@@ -239,7 +239,7 @@ package z_spark.fallingsystem
 					}else break;
 				}
 				
-				if(spdFactor>5)spdFactor=5;
+				if(spdFactor>3)spdFactor=3;
 				if(entity.spdy<SPEED*spdFactor){
 					entity.spdy=SPEED*spdFactor;
 				}
@@ -276,6 +276,12 @@ package z_spark.fallingsystem
 		 */
 		public function clean():void{
 			if(m_trigger.hasEventListener(Event.ENTER_FRAME))m_trigger.removeEventListener(Event.ENTER_FRAME,update);
+			while(m_fallingEntities.length>0){
+				var entity:Sprite=m_fallingEntities.pop() as Sprite;
+				if(entity.parent)entity.parent.removeChild(entity);
+				(entity as IFallingEntity).destroy();
+			}
+			
 			m_fallingEntities.length=0;
 			m_occupyMap.length=0;
 			m_nodeCtrl.clean();

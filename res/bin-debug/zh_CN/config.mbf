@@ -37,3 +37,6 @@ sound_contnuousMatch_5	sound/sound_contnuousMatch_5.mp3		0	1	1	9
 sound_contnuousMatch_7	sound/sound_contnuousMatch_7.mp3		0	1	1	9
 sound_contnuousMatch_9	sound/sound_contnuousMatch_9.mp3		0	1	1	9
 sound_contnuousMatch_11	sound/sound_contnuousMatch_11.mp3		0	1	1	9
+
+sound_frosint_break	sound/sound_frosint_break.mp3		0	1	1	9
+sound_Drop	sound/sound_Drop.mp3		0	1	1	9

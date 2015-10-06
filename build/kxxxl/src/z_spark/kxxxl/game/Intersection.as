@@ -2,6 +2,7 @@ package z_spark.kxxxl.game
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 	
 	import z_spark.attractionsystem.AConst;
@@ -102,10 +103,16 @@ package z_spark.kxxxl.game
 		}
 		
 		//////////////////////////////////////////////////////////////
+		private var m_lastPlayedTime:uint;
 		public function standBy(arr:Array):void
 		{
 			arr.sort(Array.NUMERIC);
 			trace("stady by:"+arr);
+			var nowTime:uint=getTimer();
+			if(nowTime-m_lastPlayedTime>200){
+				Effector.playSound("sound_Drop");
+				m_lastPlayedTime=nowTime;
+			}
 			m_eliminateSys.check(arr);
 			
 		}

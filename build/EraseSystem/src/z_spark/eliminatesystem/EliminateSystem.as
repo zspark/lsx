@@ -153,7 +153,7 @@ package z_spark.eliminatesystem
 						entity.type=TypeConst.BOOM;
 						Effector.playSound("sound_create_wrap");
 					}else{
-						entity.type=TypeConst.LINE_UD;
+						entity.type=TypeConst.LINE_LR;
 						Effector.playSound("sound_create_strip");
 					}
 					result=  true;
