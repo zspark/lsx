@@ -234,12 +234,12 @@ package z_spark.fallingsystem
 				var cnode:Node=node.getNextChildNodeWithPriority();
 				while(cnode){
 					if(m_occupyMap[cnode.index]==null){
-						spdFactor+=1;
+						spdFactor+=.5;
 						cnode=cnode.getNextChildNodeWithPriority();
 					}else break;
 				}
 				
-				if(spdFactor>3)spdFactor=3;
+				if(spdFactor>2)spdFactor=2;
 				if(entity.spdy<SPEED*spdFactor){
 					entity.spdy=SPEED*spdFactor;
 				}
