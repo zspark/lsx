@@ -6,3 +6,5 @@
 #doc/*.txt # 忽略文件如doc/notes.txt，但是文件如doc/server/arch.txt不忽略
 
 .metadata
+/print.txt
+/res/bin-debug/kxxxl.swf

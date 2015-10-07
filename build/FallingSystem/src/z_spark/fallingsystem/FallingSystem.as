@@ -1,6 +1,5 @@
 package z_spark.fallingsystem
 {
-	import flash.concurrent.Condition;
 	import flash.display.Stage;
 	import flash.events.Event;
 	
@@ -83,7 +82,7 @@ package z_spark.fallingsystem
 			}
 			entity.x=getCenterX(node);
 			entity.y=getCenterY(node);
-			m_occupyMap[index]=entity;
+			m_occupyMap[index]=1;
 			entity.occupiedIndex=index;
 			return node;
 		}
@@ -107,7 +106,7 @@ package z_spark.fallingsystem
 				var node:Node=m_nodeCtrl.getNode(dIndex);
 				if(node==null)continue;
 				
-				m_occupyMap[dIndex]=null;
+				m_occupyMap[dIndex]=0;
 				var fnode:Node=node.elderNode;
 				while(fnode){
 					fnode.childrenNodes[node.relationToElderNode]=node;
@@ -169,7 +168,7 @@ package z_spark.fallingsystem
 					var node:Node=m_nodeCtrl.getNode(index);
 					var fnode:Node=node.elderNode;
 					if(fnode && m_nodeCtrl.isRootNode(fnode.index)){
-						if(m_occupyMap[fnode.index]==null){
+						if(m_occupyMap[fnode.index]==0){
 							//创建新的entity；
 							var newCmp:IFallingEntity=m_iSys.createNewAnimal(fnode.index);
 							initFallingStatus(newCmp,fnode);
@@ -179,14 +178,14 @@ package z_spark.fallingsystem
 					var cnode:Node=node.getNextChildNodeWithPriority();
 					if(cnode){
 						//check wheather can falling down before others
-						if(m_occupyMap[cnode.index]!=null){
+						if(m_occupyMap[cnode.index]!=0){
 							//occupied by some one,just wait untill next frame;
 							entity.x-=entity.spdx;
 							entity.y-=entity.spdy;
 							continue;
 						}else{
-							m_occupyMap[entity.occupiedIndex]=null;
-							m_occupyMap[cnode.index]=entity;
+							m_occupyMap[entity.occupiedIndex]=0;
+							m_occupyMap[cnode.index]=1;
 							entity.occupiedIndex=cnode.index;
 							setNewMotivationState(node,cnode,entity,entity.y-entity.finishY);
 						}
@@ -233,13 +232,13 @@ package z_spark.fallingsystem
 				var spdFactor:Number=1;
 				var cnode:Node=node.getNextChildNodeWithPriority();
 				while(cnode){
-					if(m_occupyMap[cnode.index]==null){
+					if(m_occupyMap[cnode.index]==0){
 						spdFactor+=.5;
 						cnode=cnode.getNextChildNodeWithPriority();
 					}else break;
 				}
 				
-				if(spdFactor>2.5)spdFactor=2.5;
+				if(spdFactor>3)spdFactor=3;
 				if(entity.spdy<SPEED*spdFactor){
 					entity.spdy=SPEED*spdFactor;
 				}
