@@ -9,3 +9,4 @@
 /print.txt
 *.swf
 *.swc
+!libs/*.swc
