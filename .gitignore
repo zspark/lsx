@@ -7,4 +7,5 @@
 
 .metadata
 /print.txt
-/res/bin-debug/kxxxl.swf
+*.swf
+*.swc
