@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>FallingSystem</name>
+	<name>EliminationSystemTest</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -12,14 +12,18 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>com.adobe.flexbuilder.project.aslibnature</nature>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
 	<linkedResources>
 		<link>
 			<name>[source path] src</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/src/FallingSystem/src</locationURI>
+			<locationURI>DOCUMENTS/src/EliminationSystemTest/src</locationURI>
+		</link>
+		<link>
+			<name>bin-debug</name>
+			<type>2</type>
+			<locationURI>DOCUMENTS/res/bin-debug</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="FallingSystem.as" projectUUID="ec680e20-e5a8-4cc0-9eb1-dbcfa88b4127" version="11">
-  <compiler additionalCompilerArguments="-locale en_US&#13;&#10;-define=CONFIG::DEBUG,true" autoRSLOrdering="true" copyDependentFiles="false" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin" removeUnusedRSL="true" sourceFolderPath="[source path] src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
+<actionScriptProperties analytics="false" mainApplicationPath="EliminationSystem.as" projectUUID="ec4d52fd-5cb6-4b04-8b38-af61a71cc5c3" version="11">
+  <compiler additionalCompilerArguments="-locale en_US&#13;&#10;-define=CONFIG::DEBUG,true" autoRSLOrdering="true" copyDependentFiles="false" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
-      <compilerSourcePathEntry kind="1" linkType="1" path="${DOCUMENTS}/src/FallingSystem/src"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="${DOCUMENTS}/src/EliminationSystem/src"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
@@ -42,7 +42,7 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="FallingSystem.as"/>
+    <application path="EliminationSystem.as"/>
   </applications>
   <modules/>
   <workers/>
