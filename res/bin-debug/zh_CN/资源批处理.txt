@@ -1,4 +1,4 @@
 #texturePacker
-[resroot]E:\AS3\kaixinxiaoxiaole\res\bin-debug\zh_CN\
+[resroot]E:\AS3\lsx\res\bin-debug\zh_CN\
 [rescfg]config.mbf
-[resfinalcfg]E:\AS3\kaixinxiaoxiaole\res\bin-debug\zh_CN\config.tpf
+[resfinalcfg]E:\AS3\lsx\res\bin-debug\zh_CN\config.tpf

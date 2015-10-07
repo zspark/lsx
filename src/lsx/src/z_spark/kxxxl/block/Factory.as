@@ -26,6 +26,12 @@ package z_spark.kxxxl.block
 					e=new Bubble();
 					break;
 				}
+				case BlockTypeConst.FENCE_LR:
+				case BlockTypeConst.FENCE_UD:
+				{
+					e=new Fence();
+					break;
+				}
 				default:
 				{
 					break;

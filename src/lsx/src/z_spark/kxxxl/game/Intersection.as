@@ -129,7 +129,7 @@ package z_spark.kxxxl.game
 			}
 		}
 		
-		public function canExchange(indexA:int, indexB:int):Boolean
+		public function canExchange(indexA:int, indexB:int):int
 		{
 			return m_mapSys.canExchange(indexA,indexB);
 		}

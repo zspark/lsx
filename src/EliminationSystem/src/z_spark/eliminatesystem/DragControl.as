@@ -9,6 +9,7 @@ package z_spark.eliminatesystem
 	
 	import z_spark.attractionsystem.Effector;
 	import z_spark.core.debug.logger.Logger;
+	import z_spark.kxxxlcore.ExchangeStatus;
 	import z_spark.kxxxlcore.GameSize;
 
 	final internal class DragControl
@@ -155,15 +156,53 @@ package z_spark.eliminatesystem
 			CONFIG::DEBUG{
 				s_log.info("::check(),ExChange保存的entity 的索引为："+m_exchange.toString());
 			};
-			var flag:Boolean=m_MS.canExchange(m_exchange.indexA,m_exchange.indexB);
-			if(flag){
+			var status:int=m_MS.canExchange(m_exchange.indexA,m_exchange.indexB);
+			if(status==ExchangeStatus.EXCHANGE){
 				m_locked=true;
 				//地形上不对这两个动物限制，先交换其位置，然后计算消除；
 				changePosition();
 				setTimeout(m_exchange.firstCall,m_delay*1000);
 				m_exchange.clearEffect();
+			}else if(status==ExchangeStatus.SLIGHTLY){
+				m_locked=true;
+				changePositionSlightly();
+				setTimeout(endFirstExchangeSlightly,m_delay*400);
+				m_exchange.clearEffect();
 			}
 			
+		}
+		
+		private function endFirstExchangeSlightly():void
+		{
+			Effector.playSound("sound_SwapFun");
+			if(tweenA)tweenA.kill();
+			if(tweenB)tweenB.kill();
+			
+			var tmpA:IEliminateEntity=m_map[m_exchange.indexA];
+			var tmpB:IEliminateEntity=m_map[m_exchange.indexB];
+			
+			var xx:int=(m_exchange.indexA%GameSize.s_cols)*GameSize.s_gridw+GameSize.s_gridw*.5;
+			var yy:int=int(m_exchange.indexA/GameSize.s_cols)*GameSize.s_gridh+GameSize.s_gridh*.5;
+			tweenA=TweenLite.to(tmpA, m_delay, {x:xx, y:yy});
+			xx=(m_exchange.indexB%GameSize.s_cols)*GameSize.s_gridw+GameSize.s_gridw*.5;
+			yy=int(m_exchange.indexB/GameSize.s_cols)*GameSize.s_gridh+GameSize.s_gridh*.5;
+			tweenB=TweenLite.to(tmpB, m_delay, {x:xx, y:yy});
+			setTimeout(endSecondExchangeSlightly,m_delay*400);
+		}
+		
+		private function endSecondExchangeSlightly():void
+		{
+			m_locked=false;
+		}
+		
+		private var tweenA:TweenLite;
+		private var tweenB:TweenLite;
+		private function changePositionSlightly():void{
+			var tmpA:IEliminateEntity=m_map[m_exchange.indexA];
+			var tmpB:IEliminateEntity=m_map[m_exchange.indexB];
+			var tmpAPos:Point=new Point(tmpA.x,tmpA.y);
+			tweenA=TweenLite.to(tmpA, m_delay*2.5, {x:tmpB.x, y:tmpB.y});
+			tweenB=TweenLite.to(tmpB, m_delay*2.5, {x:tmpAPos.x, y:tmpAPos.y});
 		}
 		
 		private function changePosition():void

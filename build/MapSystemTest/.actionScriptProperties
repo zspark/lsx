@@ -32,9 +32,12 @@
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="${DOCUMENTS}/libs"/>
       <libraryPathEntry kind="3" linkType="1" path="/GameCore/bin/GameCore.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/MapSystem/bin/MapSystem.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/Effector/bin/Effector.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/MapSystem/bin/MapSystem.swc" sourcepath="/MapSystem/src" useDefaultLinkType="false"/>
     </libraryPath>
-    <sourceAttachmentPath/>
+    <sourceAttachmentPath>
+      <sourceAttachmentPathEntry kind="3" linkType="1" path="/MapSystem/bin/MapSystem.swc" sourcepath="/MapSystem/src" useDefaultLinkType="false"/>
+    </sourceAttachmentPath>
   </compiler>
   <applications>
     <application path="MapSystemTest.as"/>

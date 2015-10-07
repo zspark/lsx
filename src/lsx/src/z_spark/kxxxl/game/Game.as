@@ -24,7 +24,7 @@ package z_spark.kxxxl.game
 		
 		CONFIG::DEBUG{
 			private var m_debugLayer:Sprite;
-			private var m_currentLevel:int=3;
+			private var m_currentLevel:int=34;
 		};
 		private var m_isc:Intersection;
 		
