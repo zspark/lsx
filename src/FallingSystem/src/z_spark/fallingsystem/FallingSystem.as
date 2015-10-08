@@ -19,18 +19,21 @@ package z_spark.fallingsystem
 			public static var s_ins:FallingSystem;
 			private var m_fdebugger:FallingSystemDebugger;
 			public var m_updateFn:Function=update;
-			public function get occupyMap():Array{return m_occupyMap;}
 			
 			public function startDebug(debugLayer:Sprite):void{
 				m_fdebugger=new FallingSystemDebugger(m_stage,debugLayer);
 			}
+			
+			public function get startSpeed():Number{return m_startSpeed;}
+			public function set startSpeed(value:Number):void{m_startSpeed=value;}
 		};
 		
-		private var m_occupyMap:Array=[];
+		private static const MAX_SPEED:Number=15.0;
 		private var m_standByArr:Array=[];
 		private var m_trigger:Sprite;
 		private var m_nodeCtrl:NodeControl;
-		internal var SPEED:uint=6;
+		private var m_startSpeed:Number=6.0;
+		private var m_acc:Number=.2;
 		private var m_iSys:IIntegrationSys_FS;
 		private var m_fallingEntities:Vector.<IFallingEntity>;
 		private var m_map:Array;
@@ -83,7 +86,7 @@ package z_spark.fallingsystem
 			}
 			entity.x=getCenterX(node);
 			entity.y=getCenterY(node);
-			m_occupyMap[index]=1;
+			node.isOccupied=true;
 			entity.occupiedIndex=index;
 			return node;
 		}
@@ -107,7 +110,7 @@ package z_spark.fallingsystem
 				var node:Node=m_nodeCtrl.getNode(dIndex);
 				if(node==null)continue;
 				
-				m_occupyMap[dIndex]=0;
+				node.isOccupied=false;
 				var fnode:Node=node.elderNode;
 				while(fnode){
 					fnode.childrenNodes[node.relationToElderNode]=node;
@@ -144,7 +147,7 @@ package z_spark.fallingsystem
 			}
 			
 			m_fallingEntities.push(entity);
-			entity.spdy=0;
+			entity.spdy=m_startSpeed;
 			entity.spdx=0;
 			entity.finishY=getCenterY(node);
 			entity.finishX=getCenterX(node);
@@ -158,18 +161,28 @@ package z_spark.fallingsystem
 				CONFIG::DEBUG{
 					Assert.AssertTrue(m_map.indexOf(entity)<0);
 				};
+				
+				if(entity.spdx>0){
+					entity.spdx+=m_acc;
+					if(entity.spdx>MAX_SPEED)entity.spdx=MAX_SPEED;
+				}else if(entity.spdx<0){
+					entity.spdx-=m_acc;
+					if(entity.spdx<-MAX_SPEED)entity.spdx=-MAX_SPEED;
+				}
+				entity.spdy+=m_acc;
+				if(entity.spdy>MAX_SPEED)entity.spdy=MAX_SPEED;
 				entity.x+=entity.spdx;
 				entity.y+=entity.spdy;
 				if(entity.y>=entity.finishY){
 					var index:int=entity.index;
 					//到达阶段性目的地;
-					CONFIG::DEBUG{
-						Assert.AssertTrue(m_map[index]==null);
-					};
+//					CONFIG::DEBUG{
+//						Assert.AssertTrue(m_map[index]==null);
+//					};
 					var node:Node=m_nodeCtrl.getNode(index);
 					var fnode:Node=node.elderNode;
 					if(fnode && m_nodeCtrl.isRootNode(fnode.index)){
-						if(m_occupyMap[fnode.index]==0){
+						if(!fnode.isOccupied){
 							//创建新的entity；
 							var newCmp:IFallingEntity=m_iSys.createNewAnimal(fnode.index);
 							initFallingStatus(newCmp,fnode);
@@ -179,14 +192,14 @@ package z_spark.fallingsystem
 					var cnode:Node=node.getNextChildNodeWithPriority();
 					if(cnode){
 						//check wheather can falling down before others
-						if(m_occupyMap[cnode.index]!=0){
+						if(cnode.isOccupied){
 							//occupied by some one,just wait untill next frame;
 							entity.x-=entity.spdx;
 							entity.y-=entity.spdy;
 							continue;
 						}else{
-							m_occupyMap[entity.occupiedIndex]=0;
-							m_occupyMap[cnode.index]=1;
+							node.isOccupied=false;
+							cnode.isOccupied=true;
 							entity.occupiedIndex=cnode.index;
 							setNewMotivationState(node,cnode,entity,entity.y-entity.finishY);
 						}
@@ -226,23 +239,9 @@ package z_spark.fallingsystem
 			
 			if(fnode.deep!=node.deep-1){
 				entity.x=entity.finishX;
-				entity.y=entity.finishY-GameSize.s_gridh;
+				entity.y=entity.finishY-GameSize.s_gridh+overDis;
 				entity.spdx=0;
-				entity.spdy=SPEED;
 			}else{
-				var spdFactor:Number=1;
-				var cnode:Node=node.getNextChildNodeWithPriority();
-				while(cnode){
-					if(m_occupyMap[cnode.index]==0){
-						spdFactor+=1;
-						cnode=cnode.getNextChildNodeWithPriority();
-					}else break;
-				}
-				
-				if(spdFactor>4)spdFactor=4;
-				if(entity.spdy<SPEED*spdFactor){
-					entity.spdy=SPEED*spdFactor;
-				}
 				
 				if(node.relationToElderNode==Relation.SON){
 					entity.spdx=0;
@@ -283,7 +282,6 @@ package z_spark.fallingsystem
 			}
 			
 			m_fallingEntities.length=0;
-			m_occupyMap.length=0;
 			m_nodeCtrl.clean();
 		}
 	}

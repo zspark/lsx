@@ -4,6 +4,7 @@ package z_spark.fallingsystem
 
 	public final class Node
 	{
+		public var isOccupied:Boolean=false;
 		public var relationToElderNode:uint=Relation.MAX_CHILDREN;
 		public var elderNode:Node;
 		public var childrenNodes:Vector.<Node>;
@@ -17,7 +18,6 @@ package z_spark.fallingsystem
 		}
 
 		public function get deep():int	{return m_deep;}
-//		public function set deep(value:int):void{m_deep = value;}
 		public function get index():int{return m_index;}
 		public function get row():int{return int(m_index/GameSize.s_cols);}
 		public function get col():int{return m_index%GameSize.s_cols;}

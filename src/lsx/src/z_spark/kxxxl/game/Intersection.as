@@ -90,7 +90,7 @@ package z_spark.kxxxl.game
 			m_fallingSys.setPosition(a,index);
 			m_eliminateSys.add(a);
 			
-			return a;
+			return a; 
 		}
 		
 		public function createNewBlock(index:int,type:uint):IBlockEntity
@@ -160,6 +160,7 @@ package z_spark.kxxxl.game
 			
 			arr=arr.concat(bArr);
 			setTimeout(noticeToFsys,250,arr);
+//			noticeToFsys(arr);
 			m_timeoutCount++;
 		}
 		

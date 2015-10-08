@@ -3,6 +3,7 @@ package z_spark.attractionsystem
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.media.SoundChannel;
 	
 	import z_spark.batata.res.Res;
 	import z_spark.batata.res.SubBitmapData;
@@ -16,12 +17,12 @@ package z_spark.attractionsystem
 			m_effectLayer=effetLayer;
 		}
 		
-		public static function playSound(name:String,loops:int=1):uint{
+		public static function playSound(name:String,loops:int=1):SoundChannel{
 			return Res.playSound(name,loops);
 		}
 		
-		public static function stopSound(id:uint):void{
-			Res.stopSound(id);
+		public static function stopSound(sndc:SoundChannel):void{
+			Res.stopSound(sndc);
 		}
 		
 		public static function getBitmapData(name:String):SubBitmapData{

@@ -39,7 +39,7 @@ package z_spark.fallingsystem
 			m_statusTxt.multiline=true;
 			m_statusTxt.width=m_stage.stageWidth;
 			m_statusTxt.height=40;
-			m_statusTxt.text=INFO+"\npaused:"+m_paused+'	speed:'+FallingSystem.s_ins.SPEED;
+			m_statusTxt.text=INFO+"\npaused:"+m_paused+'	speed:'+FallingSystem.s_ins.startSpeed;
 			m_debugLayer.addChild(m_statusTxt);
 			};
 		}
@@ -74,12 +74,12 @@ package z_spark.fallingsystem
 				}	
 				case KeyboardConst.EQUAL:
 				{
-					FallingSystem.s_ins.SPEED++;
+					FallingSystem.s_ins.startSpeed++;
 					break;
 				}
 				case KeyboardConst.MINUS:
 				{
-					FallingSystem.s_ins.SPEED--;
+					FallingSystem.s_ins.startSpeed--;
 					break;
 				}
 				case KeyboardConst.F:
@@ -117,7 +117,7 @@ package z_spark.fallingsystem
 					break;
 				}
 			}
-			m_statusTxt.text=INFO+"\npaused:"+m_paused+'   speed:'+FallingSystem.s_ins.SPEED;
+			m_statusTxt.text=INFO+"\npaused:"+m_paused+'   speed:'+FallingSystem.s_ins.startSpeed;
 		}
 		
 		CONFIG::DEBUG
@@ -136,15 +136,17 @@ package z_spark.fallingsystem
 		
 		CONFIG::DEBUG
 		private function debugDrawOccupiedGrid_():void{
-			var arr:Array=FallingSystem.s_ins.occupyMap;
+			var nodeCtrl:NodeControl=NodeControl.s_ins;
 			//画父节点的连通性；
-			const FACTOR:Number=.8;
 			const SIZE:int=GameSize.s_gridw*.5-1;
-			for (var index:int in arr){
-				if(arr[index]==null)continue;
-				var cy:int=int(index/GameSize.s_cols)*GameSize.s_gridh+GameSize.s_gridh*.5;
-				var cx:int=int(index%GameSize.s_cols)*GameSize.s_gridw+GameSize.s_gridw*.5;
-				m_debugLayer.graphics.drawCircle(cx,cy,SIZE);
+			for each(var node:Node in nodeCtrl.dbg_nodeMap){
+				if(node==null)continue;
+				if(node.isOccupied){
+					var index:int=node.index;
+					var cy:int=int(index/GameSize.s_cols)*GameSize.s_gridh+GameSize.s_gridh*.5;
+					var cx:int=int(index%GameSize.s_cols)*GameSize.s_gridw+GameSize.s_gridw*.5;
+					m_debugLayer.graphics.drawCircle(cx,cy,SIZE);
+				}
 			}
 		}
 		

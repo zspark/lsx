@@ -5,6 +5,7 @@ package z_spark.kxxxl.game
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.media.SoundChannel;
 	
 	import z_spark.attractionsystem.Effector;
 	import z_spark.batata.res.Res;
@@ -20,7 +21,7 @@ package z_spark.kxxxl.game
 		private var m_blockLayer:Sprite;
 		private var m_animalLayer:Sprite;
 		private var m_effectLayer:Sprite;
-		private var m_bgSoundId:uint;
+		private var m_bgSoundId:SoundChannel;
 		
 		CONFIG::DEBUG{
 			private var m_debugLayer:Sprite;
