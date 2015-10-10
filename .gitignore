@@ -10,3 +10,6 @@
 *.swf
 *.swc
 !libs/*.swc
+
+.actionScriptProperties
+.flexLibProperties
