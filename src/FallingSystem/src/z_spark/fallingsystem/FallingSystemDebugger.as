@@ -136,7 +136,7 @@ package z_spark.fallingsystem
 		
 		CONFIG::DEBUG
 		private function debugDrawOccupiedGrid_():void{
-			var nodeCtrl:NodeControl=NodeControl.s_ins;
+			var nodeCtrl:NodeController=NodeController.s_ins;
 			//画父节点的连通性；
 			const SIZE:int=GameSize.s_gridw*.5-1;
 			for each(var node:Node in nodeCtrl.dbg_nodeMap){
@@ -174,7 +174,7 @@ package z_spark.fallingsystem
 		
 		CONFIG::DEBUG
 		private function debugDrawElder_():void{
-			var nodeCtrl:NodeControl=NodeControl.s_ins;
+			var nodeCtrl:NodeController=NodeController.s_ins;
 			//画父节点的连通性；
 			const FACTOR:Number=.8;
 			for each(var node:Node in nodeCtrl.dbg_nodeMap){
@@ -203,7 +203,7 @@ package z_spark.fallingsystem
 		
 		CONFIG::DEBUG
 		private function debugDrawChildren_():void{
-			var nodeCtrl:NodeControl=NodeControl.s_ins;
+			var nodeCtrl:NodeController=NodeController.s_ins;
 			//画子节点的连通性；
 			const FACTOR:Number=.8;
 			for each(var node:Node in nodeCtrl.dbg_nodeMap){
@@ -231,7 +231,7 @@ package z_spark.fallingsystem
 		
 		CONFIG::DEBUG
 		private function debugDrawNode_():void{
-			var nodeCtrl:NodeControl=NodeControl.s_ins;
+			var nodeCtrl:NodeController=NodeController.s_ins;
 			var index:int;
 			//画开始节点；
 			m_debugLayer.graphics.lineStyle(2,0x666666);

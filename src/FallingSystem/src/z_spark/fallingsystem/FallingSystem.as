@@ -31,7 +31,7 @@ package z_spark.fallingsystem
 		private static const MAX_SPEED:Number=15.0;
 		private var m_standByArr:Array=[];
 		private var m_trigger:Sprite;
-		private var m_nodeCtrl:NodeControl;
+		private var m_nodeCtrl:NodeController;
 		private var m_startSpeed:Number=6.0;
 		private var m_acc:Number=.2;
 		private var m_iSys:IIntegrationSys_FS;
@@ -42,7 +42,7 @@ package z_spark.fallingsystem
 		public function FallingSystem()
 		{
 			m_fallingEntities=new Vector.<IFallingEntity>();
-			m_nodeCtrl=new NodeControl();
+			m_nodeCtrl=new NodeController();
 			m_trigger=new Sprite();
 			CONFIG::DEBUG{s_ins=this;}
 		}
@@ -59,15 +59,6 @@ package z_spark.fallingsystem
 		}
 		
 		public function refreshRelation():void{
-			for each(var entity:IFallingEntity in m_map){
-				if(entity){
-					var index:int=entity.index;
-					var node:Node=m_nodeCtrl.getNode(index);
-					if(node){
-						m_nodeCtrl.breakElderNode(node.index,FPriority.ELDER);
-					}
-				}
-			}
 		}
 		
 		/**
@@ -113,7 +104,7 @@ package z_spark.fallingsystem
 				node.isOccupied=false;
 				var fnode:Node=node.elderNode;
 				while(fnode){
-					fnode.childrenNodes[node.relationToElderNode]=node;
+					fnode.supplyNodes[node.relationToElderNode]=node;
 					var entity:IFallingEntity=m_map[fnode.index];
 					if(entity){
 						initFallingStatus(entity,fnode);
@@ -189,7 +180,7 @@ package z_spark.fallingsystem
 						}
 					}
 					
-					var cnode:Node=node.getNextChildNodeWithPriority();
+					var cnode:Node=node.getNextSupplyNodeWithPriority();
 					if(cnode){
 						//check wheather can falling down before others
 						if(cnode.isOccupied){
@@ -210,9 +201,7 @@ package z_spark.fallingsystem
 						entity.x=entity.finishX;
 						
 						m_fallingEntities.splice(m_fallingEntities.indexOf(entity),1);
-						if(node.relationToElderNode!=Relation.MAX_CHILDREN){
-							m_nodeCtrl.breakElderNode(index,FPriority.ELDER);
-						}
+						if(fnode)fnode.supplyNodes[node.relationToElderNode]=null;
 						
 						m_map[index]=entity;
 						m_standByArr.push(index);
