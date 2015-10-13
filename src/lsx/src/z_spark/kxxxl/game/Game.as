@@ -54,13 +54,13 @@ package z_spark.kxxxl.game
 				stage.addEventListener(KeyboardEvent.KEY_DOWN,onD);
 				function onD(event:KeyboardEvent):void
 				{
-					if(event.keyCode==KeyboardConst.PERIOD){
+					if(event.keyCode==KeyboardConst.RIGHT){
 						do{
 							m_currentLevel++;
 							if(m_currentLevel>=DataManager.dataArr.length)m_currentLevel=0;
 						}while(!DataManager.isLevelDataExist(m_currentLevel));
 						DataManager.setData(m_currentLevel);
-					}else if(event.keyCode==KeyboardConst.COMMA){
+					}else if(event.keyCode==KeyboardConst.LEFT){
 						do{
 							m_currentLevel--;
 							if(m_currentLevel<0)m_currentLevel=DataManager.dataArr.length-1;
