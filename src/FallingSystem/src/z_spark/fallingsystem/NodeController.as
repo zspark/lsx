@@ -2,21 +2,23 @@ import z_spark.fallingsystem.Node;
 import z_spark.fallingsystem.Relation;
 
 class NodeInfo{
-	public var elderIndex:int;
+	public var elderNode:Node;
 	public var relationToElder:int;
 	
-	public var childrenIndexes:Array=[];
+	public var childrenNodes:Array=[];
 	
 	public function setInfo(node:Node):void{
-		elderIndex=node.elderNode?node.elderNode.index:-1;
+		elderNode=node.elderNode;
 		relationToElder=node.relationToElderNode;
 		
-		var childNode:Node=node.childrenNodes[Relation.SON];
-		childrenIndexes[Relation.SON]=childNode?childNode.index:-1;
-		childNode=node.childrenNodes[Relation.LEFT_NEPHEW];
-		childrenIndexes[Relation.LEFT_NEPHEW]=childNode?childNode.index:-1;
-		childNode=node.childrenNodes[Relation.RIGHT_NEPHEW];
-		childrenIndexes[Relation.RIGHT_NEPHEW]=childNode?childNode.index:-1;
+		childrenNodes[Relation.SON]=node.childrenNodes[Relation.SON];
+		childrenNodes[Relation.LEFT_NEPHEW]=node.childrenNodes[Relation.LEFT_NEPHEW];
+		childrenNodes[Relation.RIGHT_NEPHEW]=node.childrenNodes[Relation.RIGHT_NEPHEW];
+	}
+	
+	public function destroy():void{
+		childrenNodes.length=0;
+		elderNode=null;
 	}
 	
 }
@@ -149,19 +151,16 @@ package z_spark.fallingsystem
 				delete m_frozenNodesInfo[me];
 				m_frozenNodes.splice(m_frozenNodes.indexOf(index),1);
 				
-				if(info.elderIndex>=0){
-					me.setElderNode(m_nodeMap[info.elderIndex],info.relationToElder);
+				if(info.elderNode){
+					me.setElderNode(info.elderNode,info.relationToElder);
 				}
 				if(me.elderNode==null)m_noElderNodes.push(index);
 				
 				var relation:int=Relation.SON;
 				while(relation<Relation.MAX_CHILDREN){
-					var childIndex:int=info.childrenIndexes[relation];
-					if(childIndex>=0){
-						var childNode:Node=m_nodeMap[childIndex];
-						if(childNode){
-							childNode.setElderNode(me,relation);
-						}
+					var childNode:Node=info.childrenNodes[relation];
+					if(childNode){
+						childNode.setElderNode(me,relation);
 					}
 					relation++;
 				}

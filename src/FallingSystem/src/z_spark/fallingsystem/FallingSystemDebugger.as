@@ -68,7 +68,6 @@ package z_spark.fallingsystem
 				{
 					if(m_paused){
 						FallingSystem.s_ins.m_updateFn(null);
-						debugDrawOccupiedGrid();
 					}
 					break;
 				}	

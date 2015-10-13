@@ -46,7 +46,6 @@ package z_spark.kxxxl.data
 			if(data.blockArr.length!=0)s_iSys.mapSys.createBlock(data.blockArr,BlockTypeConst.ICE);
 			if(data.bubbleBlockArr.length!=0)s_iSys.mapSys.createBlock(data.bubbleBlockArr,BlockTypeConst.BUBBLE);
 			if(data.fenceArr.length!=0)s_iSys.mapSys.createBlock(data.fenceArr,BlockTypeConst.FENCE_LR);
-			s_iSys.fallingSys.refreshRelation();
 			
 		}
 	}

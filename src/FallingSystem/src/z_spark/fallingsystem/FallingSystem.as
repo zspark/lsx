@@ -28,7 +28,7 @@ package z_spark.fallingsystem
 			public function set startSpeed(value:Number):void{m_startSpeed=value;}
 		};
 		
-		private static const MAX_SPEED:Number=15.0;
+		private static const MAX_SPEED:Number=30.0;
 		private var m_standByArr:Array=[];
 		private var m_trigger:Sprite;
 		private var m_nodeCtrl:NodeController;
@@ -76,9 +76,6 @@ package z_spark.fallingsystem
 					}
 				}
 			}
-		}
-		
-		public function refreshRelation():void{
 		}
 		
 		/**
@@ -173,15 +170,6 @@ package z_spark.fallingsystem
 					Assert.AssertTrue(m_map.indexOf(entity)<0);
 				};
 				
-				if(entity.spdx>0){
-					entity.spdx+=m_acc;
-					if(entity.spdx>MAX_SPEED)entity.spdx=MAX_SPEED;
-				}else if(entity.spdx<0){
-					entity.spdx-=m_acc;
-					if(entity.spdx<-MAX_SPEED)entity.spdx=-MAX_SPEED;
-				}
-				entity.spdy+=m_acc;
-				if(entity.spdy>MAX_SPEED)entity.spdy=MAX_SPEED;
 				entity.x+=entity.spdx;
 				entity.y+=entity.spdy;
 				if(entity.y>=entity.finishY){
@@ -227,6 +215,16 @@ package z_spark.fallingsystem
 						m_standByArr.push(index);
 					}
 				}
+				
+				if(entity.spdx>0){
+					entity.spdx+=m_acc;
+					if(entity.spdx>MAX_SPEED)entity.spdx=MAX_SPEED;
+				}else if(entity.spdx<0){
+					entity.spdx-=m_acc;
+					if(entity.spdx<-MAX_SPEED)entity.spdx=-MAX_SPEED;
+				}
+				entity.spdy+=m_acc;
+				if(entity.spdy>MAX_SPEED)entity.spdy=MAX_SPEED;
 			}
 			if(m_standByArr.length!=0)m_iSys.standBy(m_standByArr);
 			
