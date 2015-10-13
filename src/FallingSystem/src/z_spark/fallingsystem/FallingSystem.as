@@ -51,11 +51,31 @@ package z_spark.fallingsystem
 			m_stage=stage;
 			m_map=map;
 			m_iSys=value;
-			m_nodeCtrl.init(map);
 		}
 		
 		public function setData(roadArr:Array,startArr:Array):void{
 			m_nodeCtrl.setData(roadArr,startArr);
+			m_nodeCtrl.tryConnToElder();
+		}
+		
+		private function connectSupply(arr:Array):void{
+			while(arr.length>0){
+				var index:int=arr.shift();
+				var node:Node=m_nodeCtrl.getNode(index);
+				var nodeArr:Array=[node];
+				while(nodeArr.length>0){
+					node=nodeArr.shift();
+					if(node && !node.isOccupied){
+						node.elderNode.supplyNodes[node.relationToElderNode]=node;
+					}
+					var childNodes:Array=[];
+					node.getExistChildrenNodes(childNodes);
+					for each(var n:Node in childNodes){
+						if(arr.indexOf(n.index)>=0)continue;
+						nodeArr.push(n);
+					}
+				}
+			}
 		}
 		
 		public function refreshRelation():void{
@@ -216,6 +236,7 @@ package z_spark.fallingsystem
 				};
 				if(m_trigger.hasEventListener(Event.ENTER_FRAME))m_trigger.removeEventListener(Event.ENTER_FRAME,update);
 				var connArr:Array=m_nodeCtrl.tryConnToElder();
+				connectSupply(connArr);
 				if(connArr.length!=0)disappear(connArr);
 				else m_iSys.fallingOver();
 			}
@@ -252,10 +273,14 @@ package z_spark.fallingsystem
 		
 		public function meltNodes(arr:Array):void{
 			m_nodeCtrl.meltNodes(arr);
+			var arr2:Array=m_nodeCtrl.tryConnToElder();
+			connectSupply(arr2);
 		}
 		
 		public function freezeNodes(arr:Array):void{
 			m_nodeCtrl.freezeNodes(arr);
+			var arr2:Array=m_nodeCtrl.tryConnToElder();
+			connectSupply(arr2);
 		}
 		
 		/**

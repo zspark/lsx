@@ -59,6 +59,13 @@ package z_spark.fallingsystem
 			if(childrenNodes[2])arr.push(childrenNodes[2]);
 		}
 		
+		public function getExistSupplyNodes(arr:Array):void{
+			arr.length=0;
+			if(supplyNodes[0])arr.push(supplyNodes[0]);
+			if(supplyNodes[1])arr.push(supplyNodes[1]);
+			if(supplyNodes[2])arr.push(supplyNodes[2]);
+		}
+		
 		public function getNextSupplyNodeWithPriority():Node{
 			return supplyNodes[Relation.SON] || supplyNodes[Relation.LEFT_NEPHEW] || supplyNodes[Relation.RIGHT_NEPHEW];
 		}

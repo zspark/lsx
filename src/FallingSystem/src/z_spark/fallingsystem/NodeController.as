@@ -45,7 +45,10 @@ package z_spark.fallingsystem
 		private var m_frozenNodesInfo:Dictionary;
 		private var m_frozenNodes:Array;
 		private var m_nodeMap:Vector.<Node>;
-		private var m_map:Array;
+		
+		public function isRootNode(index:int):Boolean{return m_roots.indexOf(index)>=0;}
+		public function isFrozenNode(index:int):Boolean{return m_frozenNodes.indexOf(index)>=0;}
+		public function getNode(index:int):Node{return m_nodeMap[index] as Node;}
 		
 		public function NodeController()
 		{
@@ -81,27 +84,6 @@ package z_spark.fallingsystem
 					i++;
 				}
 			}
-			
-			//没有与开始节点相连，尝试连接给其他节点；
-			//连接给其他节点的依据是“视觉”相连；
-			tryConnToElder();
-			trace();
-		}
-		
-		public function init(map:Array):void{
-			m_map=map;
-		}
-		
-		public function isRootNode(index:int):Boolean{
-			return m_roots.indexOf(index)>=0;
-		}
-		
-		public function isFrozenNode(index:int):Boolean{
-			return m_frozenNodes.indexOf(index)>=0;
-		}
-		
-		public function getNode(index:int):Node{
-			return m_nodeMap[index] as Node;
 		}
 		
 		public function freezeNodes(arr:Array):void
@@ -142,8 +124,6 @@ package z_spark.fallingsystem
 					relation++;
 				}
 			}
-
-			tryConnToElder();
 		}
 		
 		public function meltNodes(arr:Array):void
@@ -186,8 +166,6 @@ package z_spark.fallingsystem
 					relation++;
 				}
 			}
-			
-			tryConnToElder();
 		}
 		
 		public function clean():void{
@@ -228,9 +206,9 @@ package z_spark.fallingsystem
 					fixDescendant(me);
 				}else{
 					CONFIG::DEBUG{
-						s_log.info("::tryConnToElder()，节点",index,"没有成功找到长辈节点！有无entity存在：",m_map[index]);
+						s_log.info("::tryConnToElder()，节点",index,"没有成功找到长辈节点！是否被占用：",me.isOccupied);
 					};
-					if(m_map[index]==null){
+					if(!me.isOccupied){
 						filterElderArr.push(index);
 						
 						var i:int=Relation.MAX_CHILDREN;
@@ -305,13 +283,13 @@ package z_spark.fallingsystem
 			if(childNode.elderNode && childNode.elderNode!=fnode){
 				if(relation<childNode.relationToElderNode){
 					childNode.setElderNode(fnode,relation);
-					if(m_map[childNode.index]==null)fixDescendant(childNode);
+					if(!childNode.isOccupied)fixDescendant(childNode);
 				}else{
 					fnode.childrenNodes[relation]=null;
 				}
 			}else{
 				childNode.setElderNode(fnode,relation);
-				if(m_map[childNode.index]==null)fixDescendant(childNode);
+				if(!childNode.isOccupied)fixDescendant(childNode);
 			}
 			return true;
 		}

@@ -92,6 +92,11 @@ package z_spark.fallingsystem
 					debugDrawChildren();
 					break;
 				}
+				case KeyboardConst.E:
+				{
+					debugDrawSupply();
+					break;
+				}
 				case KeyboardConst.C:
 				{
 					clear();
@@ -222,6 +227,37 @@ package z_spark.fallingsystem
 		}
 		
 		CONFIG::DEBUG
+		private function debugDrawSupply():void{
+			if(m_debugLayer==null)throw "先指定画布。";
+			m_debugLayer.graphics.clear();
+			debugDrawSupply_();
+			m_debugLayer.graphics.endFill();
+		}
+		
+		CONFIG::DEBUG
+		private function debugDrawSupply_():void{
+			var nodeCtrl:NodeController=NodeController.s_ins;
+			var index:int;
+			
+			var FACTOR:Number=1;
+			//画补给节点关系；
+			m_debugLayer.graphics.lineStyle(2,0xAAAAAA);
+			for each( var node:Node in nodeCtrl.dbg_nodeMap){
+				if(node==null)continue;
+				var childrenArr:Array=[];
+				node.getExistSupplyNodes(childrenArr);
+				for each(var cNode:Node in childrenArr){
+					m_debugLayer.graphics.drawCircle(getCenterX(node),getCenterY(node),2);
+					m_debugLayer.graphics.moveTo(getCenterX(node),getCenterY(node));
+					var dx:Number=getCenterX(cNode)-getCenterX(node);
+					var dy:Number=getCenterY(cNode)-getCenterY(node);
+					m_debugLayer.graphics.lineTo(getCenterX(node)+dx*FACTOR,getCenterY(node)+dy*FACTOR);
+				}
+			}
+			
+		}
+		
+		CONFIG::DEBUG
 		private function debugDrawNode():void{
 			if(m_debugLayer==null)throw "先指定画布。";
 			m_debugLayer.graphics.clear();
@@ -233,6 +269,23 @@ package z_spark.fallingsystem
 		private function debugDrawNode_():void{
 			var nodeCtrl:NodeController=NodeController.s_ins;
 			var index:int;
+			
+			var FACTOR:Number=1;
+			//画补给节点关系；
+			m_debugLayer.graphics.lineStyle(2,0xAAAAAA);
+			for each( var node:Node in nodeCtrl.dbg_nodeMap){
+				if(node==null)continue;
+				var childrenArr:Array=[];
+				node.getExistSupplyNodes(childrenArr);
+				for each(var cNode:Node in childrenArr){
+					m_debugLayer.graphics.drawCircle(getCenterX(node),getCenterY(node),2);
+					m_debugLayer.graphics.moveTo(getCenterX(node),getCenterY(node));
+					var dx:Number=getCenterX(cNode)-getCenterX(node);
+					var dy:Number=getCenterY(cNode)-getCenterY(node);
+					m_debugLayer.graphics.lineTo(getCenterX(node)+dx*FACTOR,getCenterY(node)+dy*FACTOR);
+				}
+			}
+			
 			//画开始节点；
 			m_debugLayer.graphics.lineStyle(2,0x666666);
 			for each( index in nodeCtrl.dbg_roots){
@@ -250,7 +303,7 @@ package z_spark.fallingsystem
 			}
 			
 			//画冻结节点；
-			const FACTOR:Number=.8;
+			FACTOR=.8;
 			m_debugLayer.graphics.lineStyle(2,0x880088);
 			for each( index in nodeCtrl.dbg_frozenNodes){
 				node=nodeCtrl.dbg_nodeMap[index];
