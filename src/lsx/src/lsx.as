@@ -12,9 +12,8 @@ package
 	[SWF(frameRate=6o, width=800, height=800)]
 	public class lsx extends Sprite
 	{
-		//演示地址：v1
-		//http://www.zspark.net/content/swfs/kxxxl/kxxxl_release.swf
-		
+		//开发主页：http://www.zspark.net/?post=35
+		//GitHub地址：https://github.com/zspark/lsx.git
 		
 		public function lsx()
 		{

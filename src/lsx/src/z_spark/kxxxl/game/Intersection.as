@@ -90,7 +90,7 @@ package z_spark.kxxxl.game
 			m_fallingSys.setPosition(a,index);
 			m_eliminateSys.add(a);
 			
-			return a;
+			return a; 
 		}
 		
 		public function createNewBlock(index:int,type:uint):IBlockEntity
@@ -129,24 +129,25 @@ package z_spark.kxxxl.game
 			}
 		}
 		
-		public function canExchange(indexA:int, indexB:int):Boolean
+		public function canExchange(indexA:int, indexB:int):int
 		{
 			return m_mapSys.canExchange(indexA,indexB);
 		}
 		
-		public function dispatchDisappearIndexes(disappearIndexes:Array,playSound:Boolean):void
+		public function dispatchDisappearIndexes(involvedIndexes:Array,playSound:Boolean):void
 		{
-			var arr:Array=disappearIndexes.concat();
-			var bArr:Array=m_mapSys.disappear(arr);
+			var bArr:Array=m_mapSys.disappear(involvedIndexes);
 			if(bArr.length>0){
 				m_fallingSys.meltNodes(bArr);
 			}
 			
-			for each(var idx:int in arr){
+			var arr:Array=[];
+			for each(var idx:int in involvedIndexes){
 				var entity:IEliminateEntity=m_map[idx];
 				if(entity){
 					m_animalLayer.removeChild(entity as Sprite);
 					m_map[idx]=null;
+					arr.push(idx);
 				}
 			}
 			
@@ -160,6 +161,7 @@ package z_spark.kxxxl.game
 			
 			arr=arr.concat(bArr);
 			setTimeout(noticeToFsys,250,arr);
+//			noticeToFsys(arr);
 			m_timeoutCount++;
 		}
 		

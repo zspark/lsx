@@ -18,6 +18,7 @@ package z_spark.kxxxl.data
 			s_dataArr[5]=Level5;
 			s_dataArr[8]=Level8;
 			s_dataArr[33]=Level33;
+			s_dataArr[34]=Level34;
 		}
 		
 		CONFIG::DEBUG{
@@ -31,7 +32,7 @@ package z_spark.kxxxl.data
 			s_iSys.clean();
 			
 			var cls:Class=s_dataArr[level] as Class;
-			var data:Object=new cls();
+			var data:LevelBase=new cls();
 			
 			s_iSys.mapSys.setData(data.roadArr,data.startArr);
 			s_iSys.eliminateSys.filterArr=data.startArr;
@@ -44,7 +45,7 @@ package z_spark.kxxxl.data
 			}
 			if(data.blockArr.length!=0)s_iSys.mapSys.createBlock(data.blockArr,BlockTypeConst.ICE);
 			if(data.bubbleBlockArr.length!=0)s_iSys.mapSys.createBlock(data.bubbleBlockArr,BlockTypeConst.BUBBLE);
-			s_iSys.fallingSys.refreshRelation();
+			if(data.fenceArr.length!=0)s_iSys.mapSys.createBlock(data.fenceArr,BlockTypeConst.FENCE_LR);
 			
 		}
 	}

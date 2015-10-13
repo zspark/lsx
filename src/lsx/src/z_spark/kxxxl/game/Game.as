@@ -5,6 +5,7 @@ package z_spark.kxxxl.game
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.media.SoundChannel;
 	
 	import z_spark.attractionsystem.Effector;
 	import z_spark.batata.res.Res;
@@ -20,11 +21,11 @@ package z_spark.kxxxl.game
 		private var m_blockLayer:Sprite;
 		private var m_animalLayer:Sprite;
 		private var m_effectLayer:Sprite;
-		private var m_bgSoundId:uint;
+		private var m_bgSoundId:SoundChannel;
 		
 		CONFIG::DEBUG{
 			private var m_debugLayer:Sprite;
-			private var m_currentLevel:int=3;
+			private var m_currentLevel:int=34;
 		};
 		private var m_isc:Intersection;
 		
@@ -53,13 +54,13 @@ package z_spark.kxxxl.game
 				stage.addEventListener(KeyboardEvent.KEY_DOWN,onD);
 				function onD(event:KeyboardEvent):void
 				{
-					if(event.keyCode==KeyboardConst.PERIOD){
+					if(event.keyCode==KeyboardConst.RIGHT){
 						do{
 							m_currentLevel++;
 							if(m_currentLevel>=DataManager.dataArr.length)m_currentLevel=0;
 						}while(!DataManager.isLevelDataExist(m_currentLevel));
 						DataManager.setData(m_currentLevel);
-					}else if(event.keyCode==KeyboardConst.COMMA){
+					}else if(event.keyCode==KeyboardConst.LEFT){
 						do{
 							m_currentLevel--;
 							if(m_currentLevel<0)m_currentLevel=DataManager.dataArr.length-1;

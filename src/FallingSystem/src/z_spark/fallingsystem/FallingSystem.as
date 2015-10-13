@@ -19,18 +19,21 @@ package z_spark.fallingsystem
 			public static var s_ins:FallingSystem;
 			private var m_fdebugger:FallingSystemDebugger;
 			public var m_updateFn:Function=update;
-			public function get occupyMap():Array{return m_occupyMap;}
 			
 			public function startDebug(debugLayer:Sprite):void{
 				m_fdebugger=new FallingSystemDebugger(m_stage,debugLayer);
 			}
+			
+			public function get startSpeed():Number{return m_startSpeed;}
+			public function set startSpeed(value:Number):void{m_startSpeed=value;}
 		};
 		
-		private var m_occupyMap:Array=[];
+		private static const MAX_SPEED:Number=30.0;
 		private var m_standByArr:Array=[];
 		private var m_trigger:Sprite;
-		private var m_nodeCtrl:NodeControl;
-		internal var SPEED:uint=6;
+		private var m_nodeCtrl:NodeController;
+		private var m_startSpeed:Number=6.0;
+		private var m_acc:Number=.2;
 		private var m_iSys:IIntegrationSys_FS;
 		private var m_fallingEntities:Vector.<IFallingEntity>;
 		private var m_map:Array;
@@ -39,7 +42,7 @@ package z_spark.fallingsystem
 		public function FallingSystem()
 		{
 			m_fallingEntities=new Vector.<IFallingEntity>();
-			m_nodeCtrl=new NodeControl();
+			m_nodeCtrl=new NodeController();
 			m_trigger=new Sprite();
 			CONFIG::DEBUG{s_ins=this;}
 		}
@@ -48,20 +51,28 @@ package z_spark.fallingsystem
 			m_stage=stage;
 			m_map=map;
 			m_iSys=value;
-			m_nodeCtrl.init(map);
 		}
 		
 		public function setData(roadArr:Array,startArr:Array):void{
 			m_nodeCtrl.setData(roadArr,startArr);
+			m_nodeCtrl.tryConnToElder();
 		}
 		
-		public function refreshRelation():void{
-			for each(var entity:IFallingEntity in m_map){
-				if(entity){
-					var index:int=entity.index;
-					var node:Node=m_nodeCtrl.getNode(index);
-					if(node){
-						m_nodeCtrl.breakElderNode(node.index,FPriority.ELDER);
+		private function connectSupply(arr:Array):void{
+			while(arr.length>0){
+				var index:int=arr.shift();
+				var node:Node=m_nodeCtrl.getNode(index);
+				var nodeArr:Array=[node];
+				while(nodeArr.length>0){
+					node=nodeArr.shift();
+					if(node && !node.isOccupied){
+						node.elderNode.supplyNodes[node.relationToElderNode]=node;
+					}
+					var childNodes:Array=[];
+					node.getExistChildrenNodes(childNodes);
+					for each(var n:Node in childNodes){
+						if(arr.indexOf(n.index)>=0)continue;
+						nodeArr.push(n);
 					}
 				}
 			}
@@ -83,7 +94,7 @@ package z_spark.fallingsystem
 			}
 			entity.x=getCenterX(node);
 			entity.y=getCenterY(node);
-			m_occupyMap[index]=1;
+			node.isOccupied=true;
 			entity.occupiedIndex=index;
 			return node;
 		}
@@ -107,10 +118,10 @@ package z_spark.fallingsystem
 				var node:Node=m_nodeCtrl.getNode(dIndex);
 				if(node==null)continue;
 				
-				m_occupyMap[dIndex]=0;
+				node.isOccupied=false;
 				var fnode:Node=node.elderNode;
 				while(fnode){
-					fnode.childrenNodes[node.relationToElderNode]=node;
+					fnode.supplyNodes[node.relationToElderNode]=node;
 					var entity:IFallingEntity=m_map[fnode.index];
 					if(entity){
 						initFallingStatus(entity,fnode);
@@ -144,7 +155,7 @@ package z_spark.fallingsystem
 			}
 			
 			m_fallingEntities.push(entity);
-			entity.spdy=0;
+			entity.spdy=m_startSpeed;
 			entity.spdx=0;
 			entity.finishY=getCenterY(node);
 			entity.finishX=getCenterX(node);
@@ -158,35 +169,36 @@ package z_spark.fallingsystem
 				CONFIG::DEBUG{
 					Assert.AssertTrue(m_map.indexOf(entity)<0);
 				};
+				
 				entity.x+=entity.spdx;
 				entity.y+=entity.spdy;
 				if(entity.y>=entity.finishY){
 					var index:int=entity.index;
 					//到达阶段性目的地;
-					CONFIG::DEBUG{
-						Assert.AssertTrue(m_map[index]==null);
-					};
+//					CONFIG::DEBUG{
+//						Assert.AssertTrue(m_map[index]==null);
+//					};
 					var node:Node=m_nodeCtrl.getNode(index);
 					var fnode:Node=node.elderNode;
 					if(fnode && m_nodeCtrl.isRootNode(fnode.index)){
-						if(m_occupyMap[fnode.index]==0){
+						if(!fnode.isOccupied){
 							//创建新的entity；
 							var newCmp:IFallingEntity=m_iSys.createNewAnimal(fnode.index);
 							initFallingStatus(newCmp,fnode);
 						}
 					}
 					
-					var cnode:Node=node.getNextChildNodeWithPriority();
+					var cnode:Node=node.getNextSupplyNodeWithPriority();
 					if(cnode){
 						//check wheather can falling down before others
-						if(m_occupyMap[cnode.index]!=0){
+						if(cnode.isOccupied){
 							//occupied by some one,just wait untill next frame;
 							entity.x-=entity.spdx;
 							entity.y-=entity.spdy;
 							continue;
 						}else{
-							m_occupyMap[entity.occupiedIndex]=0;
-							m_occupyMap[cnode.index]=1;
+							node.isOccupied=false;
+							cnode.isOccupied=true;
 							entity.occupiedIndex=cnode.index;
 							setNewMotivationState(node,cnode,entity,entity.y-entity.finishY);
 						}
@@ -197,14 +209,22 @@ package z_spark.fallingsystem
 						entity.x=entity.finishX;
 						
 						m_fallingEntities.splice(m_fallingEntities.indexOf(entity),1);
-						if(node.relationToElderNode!=Relation.MAX_CHILDREN){
-							m_nodeCtrl.breakElderNode(index,FPriority.ELDER);
-						}
+						if(fnode)fnode.supplyNodes[node.relationToElderNode]=null;
 						
 						m_map[index]=entity;
 						m_standByArr.push(index);
 					}
 				}
+				
+				if(entity.spdx>0){
+					entity.spdx+=m_acc;
+					if(entity.spdx>MAX_SPEED)entity.spdx=MAX_SPEED;
+				}else if(entity.spdx<0){
+					entity.spdx-=m_acc;
+					if(entity.spdx<-MAX_SPEED)entity.spdx=-MAX_SPEED;
+				}
+				entity.spdy+=m_acc;
+				if(entity.spdy>MAX_SPEED)entity.spdy=MAX_SPEED;
 			}
 			if(m_standByArr.length!=0)m_iSys.standBy(m_standByArr);
 			
@@ -214,6 +234,7 @@ package z_spark.fallingsystem
 				};
 				if(m_trigger.hasEventListener(Event.ENTER_FRAME))m_trigger.removeEventListener(Event.ENTER_FRAME,update);
 				var connArr:Array=m_nodeCtrl.tryConnToElder();
+				connectSupply(connArr);
 				if(connArr.length!=0)disappear(connArr);
 				else m_iSys.fallingOver();
 			}
@@ -226,23 +247,9 @@ package z_spark.fallingsystem
 			
 			if(fnode.deep!=node.deep-1){
 				entity.x=entity.finishX;
-				entity.y=entity.finishY-GameSize.s_gridh;
+				entity.y=entity.finishY-GameSize.s_gridh+overDis;
 				entity.spdx=0;
-				entity.spdy=SPEED;
 			}else{
-				var spdFactor:Number=1;
-				var cnode:Node=node.getNextChildNodeWithPriority();
-				while(cnode){
-					if(m_occupyMap[cnode.index]==0){
-						spdFactor+=.5;
-						cnode=cnode.getNextChildNodeWithPriority();
-					}else break;
-				}
-				
-				if(spdFactor>3)spdFactor=3;
-				if(entity.spdy<SPEED*spdFactor){
-					entity.spdy=SPEED*spdFactor;
-				}
 				
 				if(node.relationToElderNode==Relation.SON){
 					entity.spdx=0;
@@ -264,10 +271,14 @@ package z_spark.fallingsystem
 		
 		public function meltNodes(arr:Array):void{
 			m_nodeCtrl.meltNodes(arr);
+			var arr2:Array=m_nodeCtrl.tryConnToElder();
+			connectSupply(arr2);
 		}
 		
 		public function freezeNodes(arr:Array):void{
 			m_nodeCtrl.freezeNodes(arr);
+			var arr2:Array=m_nodeCtrl.tryConnToElder();
+			connectSupply(arr2);
 		}
 		
 		/**
@@ -283,7 +294,6 @@ package z_spark.fallingsystem
 			}
 			
 			m_fallingEntities.length=0;
-			m_occupyMap.length=0;
 			m_nodeCtrl.clean();
 		}
 	}

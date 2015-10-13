@@ -7,6 +7,7 @@ package z_spark.mapsystem
 		
 		function get isOcupier():Boolean;
 		function get type():int;
+		function set type(value:int):void;
 			
 		function get x():Number;
 		function set x(value:Number):void;

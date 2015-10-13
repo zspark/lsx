@@ -53,9 +53,12 @@ package z_spark.kxxxl.block
 		
 		public function get isOcupier():Boolean{return m_isOcupier;}
 		public function get type():int{return m_type;}
+		public function set type(value:int):void{m_type=value;}
+		
 		public function tryEliminate(index:int):Boolean{return false;}
 
 		public function setSkin(resName:String):void{
+			Res.dispose(m_skin.bitmapData as SubBitmapData);
 			var bmpd:SubBitmapData=Effector.getBitmapData(resName);
 			m_skin.bitmapData=bmpd;
 			m_skin.x=-bmpd.width>>1;
@@ -63,7 +66,7 @@ package z_spark.kxxxl.block
 		}
 		
 		public function destroy():void{
-			graphics.clear();
+			CONFIG::DEBUG{graphics.clear();};
 			Res.dispose(m_skin.bitmapData as SubBitmapData);
 		}
 		

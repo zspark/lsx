@@ -13,10 +13,10 @@ package z_spark.eliminatesystem
 		 * 该逻辑捎带检测试图交换的2个entity是否包含开始节点，有的话返回false；
 		 * @param indexA
 		 * @param indexB
-		 * @return 
+		 * @return 返回值参考ExchangeStatus常量；
 		 * 
 		 */
-		function canExchange(indexA:int,indexB:int):Boolean;
+		function canExchange(indexA:int,indexB:int):int;
 		
 		/**
 		 * 向外提交将要消除的动物在map中的index数组；

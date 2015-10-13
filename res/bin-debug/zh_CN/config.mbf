@@ -29,6 +29,7 @@ sound_swap_lineline	sound/sound_swap_lineline.mp3		0	1	1	9
 sound_swap_wrapline	sound/sound_swap_wrapline.mp3		0	1	1	9
 sound_swap_wrapwrap	sound/sound_swap_wrapwrap.mp3		0	1	1	9
 sound_swap	sound/sound_swap.mp3		0	1	1	9
+sound_SwapFun	sound/sound_SwapFun.mp3		0	1	1	9
 
 sound_ice_break	sound/sound_ice_break.mp3		0	1	1	9
 

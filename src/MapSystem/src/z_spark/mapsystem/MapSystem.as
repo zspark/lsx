@@ -5,9 +5,11 @@ package z_spark.mapsystem
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.MouseEvent;
+	import flash.utils.Dictionary;
 	
 	import z_spark.batata.res.Res;
 	import z_spark.core.debug.logger.Logger;
+	import z_spark.kxxxlcore.ExchangeStatus;
 	import z_spark.kxxxlcore.GameSize;
 	
 	final public class MapSystem
@@ -44,6 +46,7 @@ package z_spark.mapsystem
 		
 		private var m_gridMap:Array=[];
 		private var m_blockMap:Array;
+		private var m_fenceMap:Dictionary;
 		private var m_map:Array;
 		private var m_iSys:IIntegrationSys_MS;
 		private var m_blockLayer:DisplayObjectContainer;
@@ -60,6 +63,7 @@ package z_spark.mapsystem
 			m_mapLayer=mapLayer;
 			m_blockLayer=blockLayer;
 			m_animalLayer=animalLayer;
+			m_fenceMap=new Dictionary();
 		}
 		
 		/**
@@ -151,23 +155,74 @@ package z_spark.mapsystem
 		 * 
 		 */
 		public function  createBlock(value:Array,type:uint):void{
+			switch(type)
+			{
+				case BlockTypeConst.BUBBLE:
+				{
+					createBlock_(value,type);
+					break;
+				}
+				case BlockTypeConst.ICE:
+				{
+					createBlock_(value,type);
+					m_iSys.freeze(value);
+					break;
+				}
+				case BlockTypeConst.EGG:
+				{
+					createBlock_(value,type);
+					m_iSys.freeze(value);
+					break;
+				}
+				case BlockTypeConst.FENCE_LR:
+				case BlockTypeConst.FENCE_UD:
+				{
+					for (var i:int=0;i<value.length;i+=2){
+						var indexA:int=value[i];
+						var dis:IBlockEntity=m_iSys.createNewBlock(indexA,type);
+						var indexB:int=value[i+1];
+						m_fenceMap[indexA+'_'+indexB]=dis;
+						m_fenceMap[indexB+"_"+indexA]=dis;
+						
+						if(isSameRow(indexA,indexB)){
+							dis.type=BlockTypeConst.FENCE_UD;
+						}else{
+							dis.type=BlockTypeConst.FENCE_LR;
+						}
+						
+						dis.x+=(indexB%GameSize.s_cols)*GameSize.s_gridw+GameSize.s_gridw*.5;
+						dis.x/=2;
+						dis.y+=int(indexB/GameSize.s_cols)*GameSize.s_gridh+GameSize.s_gridh*.5;
+						dis.y/=2;
+						
+					}
+					trace();
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			}
+		}
+		
+		private function createBlock_(value:Array,type:uint):void{
 			for (var i:int=0;i<value.length;i++){
 				var index:int=value[i];
 				var dis:IBlockEntity=m_iSys.createNewBlock(index,type);
 				m_blockMap[index]=dis;
 			}
-			
-			if(type!=BlockTypeConst.BUBBLE)	m_iSys.freeze(value);
 		}
 		
-		public function canExchange(indexA:int, indexB:int):Boolean
+		public function canExchange(indexA:int, indexB:int):int
 		{
 			CONFIG::DEBUG{
 				s_log.info("::canExchange(),"+indexA+"|"+indexB);
 			};
-			if(m_filterArr.indexOf(indexA)>=0)return false;
-			if(m_filterArr.indexOf(indexB)>=0)return false;
-			return true;
+			if(m_filterArr.indexOf(indexA)>=0)return ExchangeStatus.STAND_STILL;
+			if(m_filterArr.indexOf(indexB)>=0)return ExchangeStatus.STAND_STILL;
+			if(m_fenceMap[indexA+'_'+indexB]!=null)return ExchangeStatus.SLIGHTLY;
+			return ExchangeStatus.EXCHANGE;
 		}
 		
 		public function clean():void{
@@ -179,6 +234,14 @@ package z_spark.mapsystem
 				m_mapLayer.removeChild(tile);
 			}
 			m_gridMap.length=0;
+			
+			for each(var entity:IBlockEntity in m_fenceMap){
+				if((entity as Sprite).parent==m_blockLayer){
+					m_blockLayer.removeChild(entity as Sprite);
+					entity.destroy();
+				}
+			}
+			m_fenceMap=new Dictionary();
 		}
 		
 		private function isSameRow(indexA:int,indexB:int):Boolean{

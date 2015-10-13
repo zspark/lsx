@@ -15,7 +15,6 @@ package z_spark.kxxxl.animal
 	public class Animal extends AnimalEntity implements IFallingEntity, IEliminateEntity
 	{
 		CONFIG::DEBUG{
-			protected var m_tf:TextField;
 			private var m_tfDeep:TextField;
 			
 		};
@@ -27,11 +26,6 @@ package z_spark.kxxxl.animal
 		{
 			super();
 			CONFIG::DEBUG{
-				m_tf=new TextField();
-				m_tf.width=30;
-				m_tf.height=30;
-				m_tf.mouseEnabled=false;
-				addChild(m_tf);
 				m_tfDeep=new TextField();
 				m_tfDeep.x=-15;
 				m_tfDeep.y=-15;
@@ -74,10 +68,6 @@ package z_spark.kxxxl.animal
 				var skin:String=AnimalUtil.getSkin(m_color,m_type);
 				setSkin(skin);
 			}
-			
-			CONFIG::DEBUG{
-				m_tf.text=value+'';
-			};
 		}
 		
 		private var m_type:uint=TypeConst.NORMAL;
