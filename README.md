@@ -3,7 +3,7 @@
 虽然不多，但偶尔也有一些朋友对我13年写的这个程序有兴趣，得空将游戏部署在了网页，可以直接在网络浏览器中运行（如果是chrome等浏览器会默认屏蔽swf文件的播放，同意运行就好）。其中的网址是我临时博客地址。
 
 新的演示地址：
-http://z.ooiii.com/wiki/uploads/lsx/index.html
+http://z.ooiii.com/wiki/legacy/lsx/index.html
 
 ----
 
