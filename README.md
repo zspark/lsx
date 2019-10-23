@@ -12,6 +12,6 @@ http://z.ooiii.com/wiki/legacy/lsx/index.html
 # lsx
 模仿热门手游、页游《开心消消乐》的AS3版程序，项目代号lsx（乐三消）
 
-主页：http://www.zspark.net/post/as3/lsx.html
+主页：http://www.zspark.me/#%E4%B9%90%E4%B8%89%E6%B6%88
 README.md不作更新的跟进，一切在上面网站进行；
 
